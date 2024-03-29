@@ -1,2 +1,0 @@
-(("undefined"!==typeof self?self:this)["webpackJsonpionoscloud_0_1_3"]=("undefined"!==typeof self?self:this)["webpackJsonpionoscloud_0_1_3"]||[]).push([[5],{"1bb6":function(e,o){const n=[{driver:{ionoscloud:{auth:{fields:{password:"Password",username:"Username",token:"Token",endpoint:"Endpoint"},placeholders:{password:"($IONOSCLOUD_PASSWORD)",username:"($IONOSCLOUD_USERNAME)",token:"($IONOSCLOUD_TOKEN)",endpoint:"($IONOSCLOUD_ENDPOINT)"}}}}}];e.exports=n.length<=1?n[0]:n}}]);
-//# sourceMappingURL=ionoscloud-0.1.3.umd.min.5.js.map
