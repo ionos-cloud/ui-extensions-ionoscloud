@@ -3,6 +3,27 @@ entries:
   ionoscloud:
   - annotations:
       catalog.cattle.io/certified: rancher
+      catalog.cattle.io/kube-version: '>= 1.16.0-0 < 1.29.0-0'
+      catalog.cattle.io/namespace: cattle-ui-plugin-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux, windows
+      catalog.cattle.io/rancher-version: '>= 2.7.0-0 < 2.9.0-0'
+      catalog.cattle.io/scope: management
+      catalog.cattle.io/ui-component: plugins
+    apiVersion: v2
+    appVersion: 0.1.3
+    created: "2024-03-29T13:21:45.663474232Z"
+    description: Adds Machine Config and Cloud Credeantials for the ionoscloud rancher
+      driver
+    digest: 6b3bf0d0775c7f26c17ce926f7ceca48290f8fd84f801ec3a51144e6537893b6
+    icon: https://raw.githubusercontent.com/ionos-cloud/ui-extensions-ionoscloud/main/pkg/ionoscloud/ionos.svg
+    name: ionoscloud
+    type: application
+    urls:
+    - assets/ionoscloud/ionoscloud-0.1.3.tgz
+    version: 0.1.3
+  - annotations:
+      catalog.cattle.io/certified: rancher
       catalog.cattle.io/kube-version: '>= 1.16.0-0 < 1.28.0-0'
       catalog.cattle.io/namespace: cattle-ui-plugin-system
       catalog.cattle.io/os: linux
@@ -11,13 +32,15 @@ entries:
       catalog.cattle.io/scope: management
       catalog.cattle.io/ui-component: plugins
     apiVersion: v2
-    appVersion: 1.0.0
-    created: "2023-07-25T13:51:16.040601999Z"
-    description: Node driver UI for ionoscloud
-    digest: c11625822b6d1d8ed3a58620dbd2feed2b89f48974430081b2140e042cc9607e
+    appVersion: 0.1.2
+    created: "2024-02-22T13:27:56.606004072Z"
+    description: Adds Machine Config and Cloud Credeantials for the ionoscloud rancher
+      driver
+    digest: 84bf5be8e7d8f045599284f698cfa458190d61deb5692944a6fa7cecb8635994
+    icon: https://raw.githubusercontent.com/ionos-cloud/ui-extensions-ionoscloud/main/pkg/ionoscloud/ionos.svg
     name: ionoscloud
     type: application
     urls:
-    - ionoscloud/ionoscloud-1.0.0.tgz
-    version: 1.0.0
-generated: "2023-07-25T13:51:16.039900484Z"
+    - assets/ionoscloud/ionoscloud-0.1.2.tgz
+    version: 0.1.2
+generated: "2024-03-29T13:21:45.662734438Z"
