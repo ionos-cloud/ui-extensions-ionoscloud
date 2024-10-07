@@ -6,11 +6,10 @@
     "node": ">=12"
   },
   "dependencies": {
-    "@rancher/shell": "^3.0.0-rc.2",
-    "cache-loader": "^4.1.0",
-    "color": "4.2.3",
-    "ip": "2.0.1",
-    "node-polyfill-webpack-plugin": "^3.0.0"
+    "@rancher/shell": "2.0.1",
+    "css-loader": "6.11.0",
+    "@types/lodash": "4.17.10",
+    "@rancher/components": "0.1.4"
   },
   "resolutions": {
     "@types/node": "~20.10.0",
