@@ -8,7 +8,6 @@ import { Checkbox } from '@components/Form/Checkbox';
 import { StringList } from '@components/StringList';
 import { stringify } from '@shell/utils/error';
 import { _VIEW } from '@shell/config/query-params';
-import FileSelector from '../components/FileSelector';
 
 import { LabeledTooltip } from '@rancher/components';
 
@@ -313,7 +312,6 @@ function validateSubnet(subnet) {
 export default {
   components: {
     Banner,
-    FileSelector,
     Loading,
     Checkbox,
     StringList,

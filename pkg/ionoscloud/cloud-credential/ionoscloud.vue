@@ -3,12 +3,10 @@ import Banner from '@components/Banner/Banner.vue';
 import { LabeledInput } from '@components/Form/LabeledInput';
 import LabeledSelect from '@shell/components/form/LabeledSelect';
 import { _CREATE } from '@shell/config/query-params';
-import BusyButton from '../components/BusyButton.vue';
 
 export default {
   components: {
     Banner,
-    BusyButton,
     LabeledInput,
     LabeledSelect,
   },
