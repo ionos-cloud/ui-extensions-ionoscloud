@@ -87,7 +87,7 @@ export default {
     <div class="row">
       <div class="col span-6">
         <LabeledInput
-          v-model="value.decodedData.username"
+          :value="value.decodedData.username"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.username"
           placeholder-key="driver.ionoscloud.auth.placeholders.username"
@@ -98,7 +98,7 @@ export default {
       </div>
       <div class="col span-6">
         <LabeledInput
-          v-model="value.decodedData.password"
+          :value="value.decodedData.password"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.password"
           placeholder-key="driver.ionoscloud.auth.placeholders.password"
@@ -111,7 +111,7 @@ export default {
     <div class="row">
       <div class="col span-12">
         <LabeledInput
-          v-model="value.decodedData.token"
+          :value="value.decodedData.token"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.token"
           placeholder-key="driver.ionoscloud.auth.placeholders.token"
@@ -124,7 +124,7 @@ export default {
     <div class="row">
       <div class="col span-12">
         <LabeledInput
-          v-model="value.decodedData.endpoint"
+          :value="value.decodedData.endpoint || 'https://api.ionos.com/cloudapi/v6'"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.endpoint"
           placeholder-key="driver.ionoscloud.auth.placeholders.endpoint"
