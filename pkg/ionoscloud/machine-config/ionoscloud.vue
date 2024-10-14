@@ -403,38 +403,38 @@ export default defineComponent({
       os:                          null,
       password:                    null,
       havePassword:                false,
-      location:                    initLocation(this.modelValue?.location || 'us/las'),
-      serverType:                  initServerType(this.modelValue?.serverType || 'ENTERPRISE'),
-      template:                    initTemplate(this.modelValue?.template || 'CUBES XS'),
-      serverAvailabilityZone:      initserverAvailabilityZone(this.modelValue?.serverAvailabilityZone || 'AUTO'),
-      volumeAvailabilityZone:      initvolumeAvailabilityZone(this.modelValue?.volumeAvailabilityZone || 'AUTO'),
-      cpuFamily:                   initCpuFamily(this.modelValue?.cpuFamily || 'INTEL_XEON'),
-      diskType:                    initDiskType(this.modelValue?.diskType || 'HDD'),
-      cores:                       this.modelValue?.cores || '2',
-      ram:                         this.modelValue?.ram || '2048',
-      diskSize:                    this.modelValue?.diskSize || '50',
-      image:                       this.modelValue?.image || 'ubuntu:20.04',
-      imagePassword:               this.modelValue?.imagePassword,
-      cloudInit:                   this.modelValue?.cloudInit,
-      sshUser:                     this.modelValue?.sshUser || 'root',
-      sshInCloudInit:              this.modelValue?.sshInCloudInit || false,
-      datacenterId:                this.modelValue?.datacenterId,
-      datacenterName:              this.modelValue?.datacenterName || 'docker-machine-data-center',
-      lanId:                       this.modelValue?.lanId,
-      lanName:                     this.modelValue?.lanName || 'docker-machine-lan',
-      privateLan:                  this.modelValue?.privateLan || false,
-      nicDhcp:                     this.modelValue?.nicDhcp || false,
-      nicIps:                      this.modelValue?.nicIps || [],
-      additionalLans:              this.modelValue?.additionalLans || [],
-      waitForIpChange:             this.modelValue?.waitForIpChange || false,
-      waitForIpChangeTimeout:      this.modelValue?.waitForIpChangeTimeout || '600',
-      natId:                       this.modelValue?.natId,
-      natName:                     this.modelValue?.natName || 'docker-machine-nat',
-      createNat:                   this.modelValue?.createNat || false,
-      natLansToGateways:           this.getNatLansToGateways(this.modelValue?.natLansToGateways) || [],
-      natFlowlogs:                 this.modelValue?.natFlowlogs || [],
-      natPublicIps:                this.modelValue?.natPublicIps || [],
-      natRules:                    this.mode == 'create' ? defaultNatRules : this.modelValue?.natRules || [],
+      location:                    initLocation(this.value?.location || 'us/las'),
+      serverType:                  initServerType(this.value?.serverType || 'ENTERPRISE'),
+      template:                    initTemplate(this.value?.template || 'CUBES XS'),
+      serverAvailabilityZone:      initserverAvailabilityZone(this.value?.serverAvailabilityZone || 'AUTO'),
+      volumeAvailabilityZone:      initvolumeAvailabilityZone(this.value?.volumeAvailabilityZone || 'AUTO'),
+      cpuFamily:                   initCpuFamily(this.value?.cpuFamily || 'INTEL_XEON'),
+      diskType:                    initDiskType(this.value?.diskType || 'HDD'),
+      cores:                       this.value?.cores || '2',
+      ram:                         this.value?.ram || '2048',
+      diskSize:                    this.value?.diskSize || '50',
+      image:                       this.value?.image || 'ubuntu:20.04',
+      imagePassword:               this.value?.imagePassword,
+      cloudInit:                   this.value?.cloudInit,
+      sshUser:                     this.value?.sshUser || 'root',
+      sshInCloudInit:              this.value?.sshInCloudInit || false,
+      datacenterId:                this.value?.datacenterId,
+      datacenterName:              this.value?.datacenterName || 'docker-machine-data-center',
+      lanId:                       this.value?.lanId,
+      lanName:                     this.value?.lanName || 'docker-machine-lan',
+      privateLan:                  this.value?.privateLan || false,
+      nicDhcp:                     this.value?.nicDhcp || false,
+      nicIps:                      this.value?.nicIps || [],
+      additionalLans:              this.value?.additionalLans || [],
+      waitForIpChange:             this.value?.waitForIpChange || false,
+      waitForIpChangeTimeout:      this.value?.waitForIpChangeTimeout || '600',
+      natId:                       this.value?.natId,
+      natName:                     this.value?.natName || 'docker-machine-nat',
+      createNat:                   this.value?.createNat || false,
+      natLansToGateways:           this.getNatLansToGateways(this.value?.natLansToGateways) || [],
+      natFlowlogs:                 this.value?.natFlowlogs || [],
+      natPublicIps:                this.value?.natPublicIps || [],
+      natRules:                    this.mode == 'create' ? defaultNatRules : this.value?.natRules || [],
       natRuleName:                 '',
       natRuleType:                 'SNAT',
       natRuleProtocol:             initNatRuleProtocol(),
@@ -457,12 +457,12 @@ export default defineComponent({
     stringify,
 
     initForViewMode() {
-      this.fakeSelectOptions(this.Location, this.modelValue?.location);
-      this.fakeSelectOptions(this.ServerType, this.modelValue?.serverType);
-      this.fakeSelectOptions(this.serverAvailabilityZone, this.modelValue?.serverAvailabilityZone);
-      this.fakeSelectOptions(this.volumeAvailabilityZone, this.modelValue?.volumeAvailabilityZone);
-      this.fakeSelectOptions(this.CpuFamily, this.modelValue?.cpuFamily);
-      this.fakeSelectOptions(this.DiskType, this.modelValue?.diskType);
+      this.fakeSelectOptions(this.Location, this.value?.location);
+      this.fakeSelectOptions(this.ServerType, this.value?.serverType);
+      this.fakeSelectOptions(this.serverAvailabilityZone, this.value?.serverAvailabilityZone);
+      this.fakeSelectOptions(this.volumeAvailabilityZone, this.value?.volumeAvailabilityZone);
+      this.fakeSelectOptions(this.CpuFamily, this.value?.cpuFamily);
+      this.fakeSelectOptions(this.DiskType, this.value?.diskType);
     },
 
     fakeSelectOptions(list, value) {
@@ -667,41 +667,42 @@ export default defineComponent({
 
     syncValue() {
       // Note: We don't need to provide password as this is picked up via the credential
-
+      console.log("salut")
+      console.log(this)
       // Copy the values from the form to the correct places on the value
-      this.modelValue.location = this.location.selected?.value;
-      this.modelValue.serverType = this.serverType.selected?.value;
-      this.modelValue.serverAvailabilityZone = this.serverAvailabilityZone.selected?.value;
-      this.modelValue.template = this.template.selected?.value;
-      this.modelValue.volumeAvailabilityZone = this.volumeAvailabilityZone.selected?.value;
-      this.modelValue.cpuFamily = this.cpuFamily.selected?.value;
-      this.modelValue.diskType = this.diskType.selected?.value;
-      this.modelValue.cores = this.cores;
-      this.modelValue.ram = this.ram;
-      this.modelValue.diskSize = this.diskSize;
-      this.modelValue.image = this.image;
-      this.modelValue.imagePassword = this.imagePassword;
-      this.modelValue.cloudInit = this.cloudInit;
-      this.modelValue.sshUser = this.sshUser;
-      this.modelValue.sshInCloudInit = this.sshInCloudInit;
-      this.modelValue.datacenterId = this.datacenterId;
-      this.modelValue.datacenterName = this.datacenterName;
-      this.modelValue.lanId = this.lanId;
-      this.modelValue.lanName = this.lanName;
-      this.modelValue.privateLan = this.privateLan;
-      this.modelValue.nicDhcp = this.nicDhcp;
-      this.modelValue.nicIps = this.nicIps;
-      this.modelValue.additionalLans = this.additionalLans;
-      this.modelValue.waitForIpChange = this.waitForIpChange;
-      this.modelValue.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
-      this.modelValue.natId = this.natId;
-      this.modelValue.natName = this.natName;
-      this.modelValue.createNat = this.createNat;
-      this.modelValue.natLansToGateways = this.formatNatLansToGateways();
-      this.modelValue.natFlowlogs = this.natFlowlogs;
-      this.modelValue.natPublicIps = this.natPublicIps;
-      this.modelValue.natRules = this.natRules;
-      this.modelValue.skipDefaultNatRules = true;
+      this.value.location = this.location.selected?.value;
+      this.value.serverType = this.serverType.selected?.value;
+      this.value.serverAvailabilityZone = this.serverAvailabilityZone.selected?.value;
+      this.value.template = this.template.selected?.value;
+      this.value.volumeAvailabilityZone = this.volumeAvailabilityZone.selected?.value;
+      this.value.cpuFamily = this.cpuFamily.selected?.value;
+      this.value.diskType = this.diskType.selected?.value;
+      this.value.cores = this.cores;
+      this.value.ram = this.ram;
+      this.value.diskSize = this.diskSize;
+      this.value.image = this.image;
+      this.value.imagePassword = this.imagePassword;
+      this.value.cloudInit = this.cloudInit;
+      this.value.sshUser = this.sshUser;
+      this.value.sshInCloudInit = this.sshInCloudInit;
+      this.value.datacenterId = this.datacenterId;
+      this.value.datacenterName = this.datacenterName;
+      this.value.lanId = this.lanId;
+      this.value.lanName = this.lanName;
+      this.value.privateLan = this.privateLan;
+      this.value.nicDhcp = this.nicDhcp;
+      this.value.nicIps = this.nicIps;
+      this.value.additionalLans = this.additionalLans;
+      this.value.waitForIpChange = this.waitForIpChange;
+      this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
+      this.value.natId = this.natId;
+      this.value.natName = this.natName;
+      this.value.createNat = this.createNat;
+      this.value.natLansToGateways = this.formatNatLansToGateways();
+      this.value.natFlowlogs = this.natFlowlogs;
+      this.value.natPublicIps = this.natPublicIps;
+      this.value.natRules = this.natRules;
+      this.value.skipDefaultNatRules = true;
     },
 
     test() {
@@ -860,7 +861,7 @@ export default defineComponent({
         <div class="col span-12">
           <label class="acc-label">Cloud init configuration.</label>
           <textarea
-            v-model:value="cloudInit"
+            v-model="cloudInit"
             :disabled="busy || mode === _VIEW"
           ></textarea>
           <p class="help-block">Optional. <a href="https://cloudinit.readthedocs.io/en/latest/topics/examples.html" target="_blank" rel="noopener noreferrer">Cloud-init Documentation</a>.</p>

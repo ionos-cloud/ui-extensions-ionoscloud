@@ -1,12 +1,11 @@
 <script>
-import { defineComponent } from 'vue';
 
 import Banner from '@components/Banner/Banner.vue';
 import { LabeledInput } from '@components/Form/LabeledInput';
 import LabeledSelect from '@shell/components/form/LabeledSelect';
 import { _CREATE } from '@shell/config/query-params';
 
-export default defineComponent({
+export default {
   components: {
     Banner,
     LabeledInput,
@@ -19,7 +18,7 @@ export default defineComponent({
       required: true,
     },
 
-    modelValue: {
+    value: {
       type:     Object,
       required: true,
     },
@@ -34,10 +33,10 @@ export default defineComponent({
 
   data() {
     if (this.mode !== _CREATE) {
-      this.modelValue.decodedData.username = this.modelValue.annotations['ionoscloud.cattle.io/username'];
-      this.modelValue.decodedData.password = this.modelValue.annotations['ionoscloud.cattle.io/password'];
-      this.modelValue.decodedData.token = this.modelValue.annotations['ionoscloud.cattle.io/token'];
-      this.modelValue.decodedData.endpoint = this.modelValue.annotations['ionoscloud.cattle.io/endpoint'] || 'https://api.ionos.com/cloudapi/v6';
+      this.value.decodedData.username = this.value.annotations['ionoscloud.cattle.io/username'];
+      this.value.decodedData.password = this.value.annotations['ionoscloud.cattle.io/password'];
+      this.value.decodedData.token = this.value.annotations['ionoscloud.cattle.io/token'];
+      this.value.decodedData.endpoint = this.value.annotations['ionoscloud.cattle.io/endpoint'] || 'https://api.ionos.com/cloudapi/v6';
     }
 
     return {
@@ -51,9 +50,9 @@ export default defineComponent({
   computed: {
 
     canAuthenticate() {
-      return !!this.modelValue?.decodedData?.token ||
-        !!this.modelValue?.decodedData?.username &&
-        !!this.modelValue?.decodedData?.password;
+      return !!this.value?.decodedData?.token ||
+        !!this.value?.decodedData?.username &&
+        !!this.value?.decodedData?.password;
     }
   },
 
@@ -63,15 +62,15 @@ export default defineComponent({
 
   methods: {
     test() {
-      this.modelValue.annotations['ionoscloud.cattle.io/username'] = this.modelValue.decodedData.username;
-      this.modelValue.annotations['ionoscloud.cattle.io/password'] = this.modelValue.decodedData.password;
-      this.modelValue.annotations['ionoscloud.cattle.io/token'] = this.modelValue.decodedData.token;
-      this.modelValue.annotations['ionoscloud.cattle.io/endpoint'] = this.modelValue.decodedData.endpoint;
+      this.value.annotations['ionoscloud.cattle.io/username'] = this.value.decodedData.username;
+      this.value.annotations['ionoscloud.cattle.io/password'] = this.value.decodedData.password;
+      this.value.annotations['ionoscloud.cattle.io/token'] = this.value.decodedData.token;
+      this.value.annotations['ionoscloud.cattle.io/endpoint'] = this.value.decodedData.endpoint;
 
-      this.modelValue.username = this.modelValue.decodedData.username;
-      this.modelValue.password = this.modelValue.decodedData.password;
-      this.modelValue.token = this.modelValue.decodedData.token;
-      this.modelValue.endpoint = this.modelValue.decodedData.endpoint;
+      this.value.username = this.value.decodedData.username;
+      this.value.password = this.value.decodedData.password;
+      this.value.token = this.value.decodedData.token;
+      this.value.endpoint = this.value.decodedData.endpoint;
       return true;
     },
 
@@ -80,7 +79,7 @@ export default defineComponent({
       this.$emit('validationChanged', false);
     },
   },
-});
+};
 </script>
 
 <template>
@@ -88,50 +87,50 @@ export default defineComponent({
     <div class="row">
       <div class="col span-6">
         <LabeledInput
-          :modelValue="modelValue.decodedData.username"
+          v-model="value.decodedData.username"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.username"
           placeholder-key="driver.ionoscloud.auth.placeholders.username"
           type="text"
           :mode="mode"
-          @update:value="modelValue.setData('username', $event);"
+          @input="value.setData('username', $event);"
         />
       </div>
       <div class="col span-6">
         <LabeledInput
-          :modelValue="modelValue.decodedData.password"
+          v-model="value.decodedData.password"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.password"
           placeholder-key="driver.ionoscloud.auth.placeholders.password"
           type="password"
           :mode="mode"
-          @update:value="modelValue.setData('password', $event);"
+          @input="value.setData('password', $event);"
         />
       </div>
     </div>
     <div class="row">
       <div class="col span-12">
         <LabeledInput
-          :modelValue="modelValue.decodedData.token"
+          v-model="value.decodedData.token"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.token"
           placeholder-key="driver.ionoscloud.auth.placeholders.token"
           type="text"
           :mode="mode"
-          @update:value="modelValue.setData('token', $event);"
+          @input="value.setData('token', $event);"
         />
       </div>
     </div>
     <div class="row">
       <div class="col span-12">
         <LabeledInput
-          :modelValue="modelValue.decodedData.endpoint || 'https://api.ionos.com/cloudapi/v6'"
+          v-model="value.decodedData.endpoint"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.endpoint"
           placeholder-key="driver.ionoscloud.auth.placeholders.endpoint"
           type="text"
           :mode="mode"
-          @update:value="modelValue.setData('endpoint', $event);"
+          @input="value.setData('endpoint', $event);"
         />
       </div>
     </div>
