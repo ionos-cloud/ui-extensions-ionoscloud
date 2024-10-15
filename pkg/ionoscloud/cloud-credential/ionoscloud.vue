@@ -47,6 +47,24 @@ export default {
     };
   },
 
+  watch: {
+    'value.decodedData.username'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+
+    'value.decodedData.password'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+
+    'value.decodedData.token'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+
+    'value.decodedData.endpoint'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+  },
+
   computed: {
 
     canAuthenticate() {
