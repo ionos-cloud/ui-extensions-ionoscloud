@@ -1,13 +1,13 @@
 {
   "name": "ionoscloud",
   "description": "Adds Machine Config and Cloud Credeantials for the ionoscloud rancher driver",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "icon": "https://raw.githubusercontent.com/ionos-cloud/ui-extensions-ionoscloud/main/pkg/ionoscloud/ionos.svg",
   "rancher": {
     "annotations": {
-      "catalog.cattle.io/rancher-version": ">= 2.9.0",
-      "catalog.cattle.io/ui-extensions-version": ">= 2.0.1"
+      "catalog.cattle.io/rancher-version": ">= 2.10.0",
+      "catalog.cattle.io/ui-extensions-version": ">= 3.0.0"
     }
   },
   "scripts": {
@@ -15,7 +15,7 @@
     "nuxt": "./node_modules/.bin/nuxt"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
