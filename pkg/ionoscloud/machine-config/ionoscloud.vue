@@ -1,4 +1,6 @@
 <script>
+import { defineComponent } from 'vue';
+
 import Loading from '@shell/components/Loading';
 import { Banner } from '@components/Banner';
 import CreateEditView from '@shell/mixins/create-edit-view';
@@ -8,7 +10,6 @@ import { Checkbox } from '@components/Form/Checkbox';
 import { StringList } from '@components/StringList';
 import { stringify } from '@shell/utils/error';
 import { _VIEW } from '@shell/config/query-params';
-import FileSelector from '../components/FileSelector';
 
 import { LabeledTooltip } from '@rancher/components';
 
@@ -306,14 +307,13 @@ function validateIp(ip) {
 
 function validateSubnet(subnet) {
   let splitSubnet = subnet.split('/')
-  return (splitSubnet.length == 2 && validateIp(splitSubnet[0]) && !(Number.isNaN(parseInt(splitSubnet[1]))))
+  return (splitSubnet.length == 2 && validateIp(splitSubnet[0]) && !(Number.isNaN(parseInt(splitSubnet[1]))));
 }
 
 
-export default {
+export default defineComponent({
   components: {
     Banner,
-    FileSelector,
     Loading,
     Checkbox,
     StringList,
@@ -483,7 +483,7 @@ export default {
     onChangeNicIps(event) {
       for (let ip of event) {
         if (!validateIp(ip)) {
-          alert("Invalid IP detected: " + ip );
+          alert('Invalid IP detected: ' + ip );
           return;
         }
       }
@@ -498,7 +498,7 @@ export default {
     onChangeNatPublicIps(event) {
       for (let ip of event) {
         if (!validateIp(ip)) {
-          alert("Invalid IP detected: " + ip );
+          alert('Invalid IP detected: ' + ip );
           return;
         }
       }
@@ -511,18 +511,18 @@ export default {
       for (let el of event) {
         let spl = el.split(':')
         if (spl.length != 2) {
-          alert("Invalid entry detected: " + el + ". The accepted format is LanId:IP!");
+          alert('Invalid entry detected: ' + el + '. The accepted format is LanId:IP!');
           return;
         }
         let lanId = spl[0]
         if (Number.isNaN(parseInt(lanId))) {
-          alert("Invalid LAN ID detected: " + lanId );
+          alert('Invalid LAN ID detected: ' + lanId );
           return;
         }
 
         let ip = spl[1]
         if (!validateIp(ip)) {
-          alert("Invalid IP detected: " + ip );
+          alert('Invalid IP detected: ' + ip );
           return;
         }
       }
@@ -534,18 +534,18 @@ export default {
       for (let el of event) {
         let spl = el.split(':')
         if (spl.length != 4) {
-          alert("Invalid entry detected: " + el + ". The accepted format is name:action:direction:bucket!");
+          alert('Invalid entry detected: ' + el + '. The accepted format is name:action:direction:bucket!');
           return;
         }
         let action = spl[1]
-        if (!["ACCEPTED", "REJECTED", "ALL"].includes(action)) {
-          alert("Invalid action: " + action + ". Must be one of ['ACCEPTED', 'REJECTED', 'ALL']");
+        if (!['ACCEPTED', 'REJECTED', 'ALL'].includes(action)) {
+          alert('Invalid action: ' + action + '. Must be one of [\'ACCEPTED\', \'REJECTED\', \'ALL\']');
           return;
         }
 
         let direction = spl[2]
-        if (!["INGRESS", "EGRESS", "BIDIRECTIONAL"].includes(direction)) {
-          alert("Invalid direction: " + direction + ". Must be one of ['INGRESS', 'EGRESS', 'BIDIRECTIONAL']");
+        if (!['INGRESS', 'EGRESS', 'BIDIRECTIONAL'].includes(direction)) {
+          alert('Invalid direction: ' + direction + '. Must be one of [\'INGRESS\', \'EGRESS\', \'BIDIRECTIONAL\']');
           return;
         }
       }
@@ -556,40 +556,40 @@ export default {
     checkNatRule(rule) {
       let splitRule = rule.split(':') 
       if (splitRule.length != 8) {
-        alert("Invalid entry detected: " + rule + ". The accepted format is " +
-        "name:type:protocol:public_ip:source_subnet:target_subnet:target_port_range_start:target_port_range_end!");
+        alert('Invalid entry detected: ' + rule + '. The accepted format is ' +
+        'name:type:protocol:public_ip:source_subnet:target_subnet:target_port_range_start:target_port_range_end!');
         return false;
       }
       if (!['SNAT'].includes(splitRule[1])) {
-        alert("Invalid rule type: " + splitRule[1] + ". Must be one of ['SNAT']");
+        alert('Invalid rule type: ' + splitRule[1] + '. Must be one of [\'SNAT\']');
         return false;
       }
       if (!['TCP', 'UDP', 'ICMP', 'ALL'].includes(splitRule[2])) {
-        alert("Invalid rule protocol: " + splitRule[2] + ". Must be one of ['TCP', 'UDP', 'ICMP', 'ALL']");
+        alert('Invalid rule protocol: ' + splitRule[2] + '. Must be one of [\'TCP\', \'UDP\', \'ICMP\', \'ALL\']');
         return false;
       }
       if (splitRule[3] && !validateIp(splitRule[3])) {
-        alert("Invalid IP detected: " + splitRule[3] );
+        alert('Invalid IP detected: ' + splitRule[3] );
         return false;
       }
       if (splitRule[4] && !validateSubnet(splitRule[4])) {
-        alert("Invalid Subnet detected: " + splitRule[4] );
+        alert('Invalid Subnet detected: ' + splitRule[4] );
         return false;
       }
       if (splitRule[5] && !validateSubnet(splitRule[5])) {
-        alert("Invalid Subnet detected: " + splitRule[5] );
+        alert('Invalid Subnet detected: ' + splitRule[5] );
         return false;
       }
       if (splitRule[6] && (!Number.isInteger(Number(splitRule[6])) || Number(splitRule[6]) < 0)) {
-        alert("Invalid Port detected: " + splitRule[6] );
+        alert('Invalid Port detected: ' + splitRule[6] );
         return false;
       }
       if (splitRule[7] && (!Number.isInteger(Number(splitRule[7])) || Number(splitRule[7]) < 0)) {
-        alert("Invalid Port detected: " + splitRule[7] );
+        alert('Invalid Port detected: ' + splitRule[7] );
         return false;
       }
 
-      return true
+      return true;
     },
 
     onChangeNatRules(event) {
@@ -607,7 +607,7 @@ export default {
         this.natRuleTargetSubnet, this.natRuleTargetPortRangeStart, this.natRuleTargetPortRangeEnd
       ].join(':')
       if (this.natRules.includes(rule)) {
-        alert("Rule is already in list!");
+        alert('Rule is already in list!');
         return;
       }
       if (this.checkNatRule(rule)) {
@@ -645,7 +645,7 @@ export default {
         formatedValues.push(`${lanId}=${aux[lanId].join(',')}`)
       }
 
-      return formatedValues.join(':')
+      return formatedValues.join(':');
     },
 
     getNatLansToGateways(stringValue) {
@@ -667,7 +667,8 @@ export default {
 
     syncValue() {
       // Note: We don't need to provide password as this is picked up via the credential
-
+      console.log("salut")
+      console.log(this)
       // Copy the values from the form to the correct places on the value
       this.value.location = this.location.selected?.value;
       this.value.serverType = this.serverType.selected?.value;
@@ -707,8 +708,8 @@ export default {
     test() {
       this.syncValue();
     }
-  }
-};
+  },
+});
 </script>
 
 <template>
@@ -719,9 +720,7 @@ export default {
     />
     <div v-if="errors.length">
       <div
-        v-for="(err, idx) in errors"
-        :key="idx"
-      >
+        v-for="(err, idx) in errors" :key="idx">
         <Banner
           color="error"
           :label="stringify(err)"
@@ -737,7 +736,7 @@ export default {
       <div class="row mt-10">
         <div class="col span-3">
           <LabeledSelect
-            v-model="location.selected"
+            v-model:value="location.selected"
             label="Location"
             :options="location.options"
             :loading="location.busy"
@@ -746,7 +745,7 @@ export default {
         </div>
         <div class="col span-3">
           <LabeledSelect
-            v-model="serverType.selected"
+            v-model:value="serverType.selected"
             label="ServerType"
             :options="serverType.options"
             :loading="serverType.busy"
@@ -755,7 +754,7 @@ export default {
         </div>
         <div class="col span-3" v-if="serverType.selected.value === 'ENTERPRISE'">
           <LabeledSelect
-            v-model="serverAvailabilityZone.selected"
+            v-model:value="serverAvailabilityZone.selected"
             label="serverAvailabilityZone"
             :options="serverAvailabilityZone.options"
             :loading="serverAvailabilityZone.busy"
@@ -764,7 +763,7 @@ export default {
         </div>
         <div class="col span-3" v-if="serverType.selected.value === 'ENTERPRISE'">
           <LabeledSelect
-            v-model="volumeAvailabilityZone.selected"
+            v-model:value="volumeAvailabilityZone.selected"
             label="volumeAvailabilityZone"
             :options="volumeAvailabilityZone.options"
             :loading="volumeAvailabilityZone.busy"
@@ -773,7 +772,7 @@ export default {
         </div>
         <div class="col span-3" v-if="serverType.selected.value === 'CUBE'">
           <LabeledSelect
-            v-model="template.selected"
+            v-model:value="template.selected"
             label="CUBE Server Template"
             :options="template.options"
             :loading="template.busy"
@@ -785,7 +784,7 @@ export default {
       <div class="row mt-10" v-if="serverType.selected.value === 'ENTERPRISE'">
         <div class="col span-3">
           <LabeledSelect
-            v-model="cpuFamily.selected"
+            v-model:value="cpuFamily.selected"
             label="CpuFamily"
             :options="cpuFamily.options"
             :loading="cpuFamily.busy"
@@ -794,7 +793,7 @@ export default {
         </div>
         <div class="col span-3">
           <LabeledInput
-            v-model="cores"
+            v-model:value="cores"
             :mode="mode"
             :disabled="busy"
             :required="true"
@@ -803,7 +802,7 @@ export default {
         </div>
         <div class="col span-6">
           <LabeledInput
-            v-model="ram"
+            v-model:value="ram"
             :mode="mode"
             :disabled="busy"
             :required="true"
@@ -816,7 +815,7 @@ export default {
       <div class="row mt-10" v-if="serverType.selected.value === 'ENTERPRISE'">
         <div class="col span-6">
           <LabeledInput
-            v-model="diskSize"
+            v-model:value="diskSize"
             :mode="mode"
             :disabled="busy"
             :required="true"
@@ -825,7 +824,7 @@ export default {
         </div>
         <div class="col span-6">
           <LabeledSelect
-            v-model="diskType.selected"
+            v-model:value="diskType.selected"
             label="DiskType"
             :options="diskType.options"
             :loading="diskType.busy"
@@ -838,7 +837,7 @@ export default {
       <div class="row mt-10">
         <div class="col span-6">
           <LabeledInput
-            v-model="image"
+            v-model:value="image"
             :mode="mode"
             :disabled="busy"
             :required="true"
@@ -848,7 +847,7 @@ export default {
         </div>
         <div class="col span-6">
           <LabeledInput
-            v-model="imagePassword"
+            v-model:value="imagePassword"
             :mode="mode"
             :disabled="busy"
             :required="true"
@@ -872,7 +871,7 @@ export default {
       <div class="row mt-10">
         <div class="col span-4">
           <LabeledInput
-            v-model="sshUser"
+            v-model:value="sshUser"
             :mode="mode"
             :disabled="busy"
             label="SSH User"
@@ -882,7 +881,7 @@ export default {
         <div class="col span-4">
           <Checkbox
             label="Send SSH in user data."
-            v-model="sshInCloudInit"
+            v-model:value="sshInCloudInit"
             :mode="mode"
             :disabled="busy"
           />
@@ -893,7 +892,7 @@ export default {
       <div class="row mt-10">
         <div class="col span-4">
           <LabeledInput
-            v-model="datacenterId"
+            v-model:value="datacenterId"
             :mode="mode"
             :disabled="busy"
             label="Datacenter ID"
@@ -902,7 +901,7 @@ export default {
         </div>
         <div class="col span-4">
           <LabeledInput
-            v-model="datacenterName"
+            v-model:value="datacenterName"
             :mode="mode"
             :disabled="busy"
             label="Datacenter Name"
@@ -914,7 +913,7 @@ export default {
       <div class="row mt-10">
         <div class="col span-4">
           <LabeledInput
-            v-model="lanId"
+            v-model:value="lanId"
             :mode="mode"
             :disabled="busy"
             label="LAN ID"
@@ -923,7 +922,7 @@ export default {
         </div>
         <div class="col span-4">
           <LabeledInput
-            v-model="lanName"
+            v-model:value="lanName"
             :mode="mode"
             :disabled="busy"
             label="LAN Name"
@@ -933,7 +932,7 @@ export default {
         <div class="col span-4">
           <Checkbox
             label="Make Default LAN Private"
-            v-model="privateLan"
+            v-model:value="privateLan"
             :mode="mode"
             :disabled="busy"
           />
@@ -944,7 +943,7 @@ export default {
         <div class="col span-4">
           <StringList
             label="Additional LANs"
-            v-model="additionalLans"
+            v-model:value="additionalLans"
             :items="additionalLans"
             :mode="mode"
             :disabled="busy"
@@ -957,7 +956,7 @@ export default {
         <div class="col span-4">
           <Checkbox
             label="NIC DHCP"
-            v-model="nicDhcp"
+            v-model:value="nicDhcp"
             :mode="mode"
             :disabled="busy"
           />
@@ -966,7 +965,7 @@ export default {
         <div class="col span-4">
           <StringList
             label="NIC Ips"
-            v-model="nicIps"
+            v-model:value="nicIps"
             :items="nicIps"
             :mode="mode"
             :disabled="busy"
@@ -980,7 +979,7 @@ export default {
         <div class="col span-4">
           <Checkbox
             label="Wait for NIC IP change"
-            v-model="waitForIpChange"
+            v-model:value="waitForIpChange"
             :mode="mode"
             :disabled="busy"
           />
@@ -988,7 +987,7 @@ export default {
         </div>
         <div class="col span-4">
           <LabeledInput
-            v-model="waitForIpChangeTimeout"
+            v-model:value="waitForIpChangeTimeout"
             :mode="mode"
             :disabled="busy"
             label="Wait for IP change timeout"
@@ -999,7 +998,7 @@ export default {
       <div class="row mt-10">
         <div class="col span-4">
           <LabeledInput
-            v-model="natId"
+            v-model:value="natId"
             :mode="mode"
             :disabled="busy"
             label="IONOS Nat Gateway ID"
@@ -1008,7 +1007,7 @@ export default {
         </div>
         <div class="col span-4">
           <LabeledInput
-            v-model="natName"
+            v-model:value="natName"
             :mode="mode"
             :disabled="busy"
             label="IONOS Nat Gateway Name"
@@ -1018,7 +1017,7 @@ export default {
         <div class="col span-4">
           <Checkbox
             label="Create a configurable NAT"
-            v-model="createNat"
+            v-model:value="createNat"
             :mode="mode"
             :disabled="busy"
           />
@@ -1030,7 +1029,7 @@ export default {
         <div class="col span-4">
           <StringList
             label="Custom NAT: map LANs to Gateway IPs"
-            v-model="natLansToGateways"
+            v-model:value="natLansToGateways"
             :items="natLansToGateways"
             :mode="mode"
             :disabled="busy"
@@ -1041,7 +1040,7 @@ export default {
         <div class="col span-4">
           <StringList
             label="Custom NAT: Public IPs"
-            v-model="natPublicIps"
+            v-model:value="natPublicIps"
             :items="natPublicIps"
             :mode="mode"
             :disabled="busy"
@@ -1052,7 +1051,7 @@ export default {
         <div class="col span-4">
           <StringList
             label="Custom NAT: Flowlogs"
-            v-model="natFlowlogs"
+            v-model:value="natFlowlogs"
             :items="natFlowlogs"
             :mode="mode"
             :disabled="busy"
@@ -1066,7 +1065,7 @@ export default {
         <div class="col span-6">
           <StringList
             label="Custom NAT: Rules"
-            v-model="natRules"
+            v-model:value="natRules"
             :items="natRules"
             :mode="mode"
             :disabled="busy"
@@ -1079,7 +1078,7 @@ export default {
         <div class="row mt-10">
           <div class="col span-3">
             <LabeledInput
-              v-model="natRuleName"
+              v-model:value="natRuleName"
               :mode="mode"
               :disabled="busy"
               label="IONOS Nat Gateway Rule Name"
@@ -1088,7 +1087,7 @@ export default {
           </div>
           <div class="col span-3">
               <LabeledInput
-                v-model="natRuleType"
+                v-model:value="natRuleType"
                 :mode="mode"
                 :disabled="busy"
                 label="IONOS Nat Gateway Rule Type"
@@ -1097,7 +1096,7 @@ export default {
           </div>
           <div class="col span-3">
             <LabeledSelect
-              v-model="natRuleProtocol.selected"
+              v-model:value="natRuleProtocol.selected"
               label="natRuleProtocol"
               :options="natRuleProtocol.options"
               :loading="natRuleProtocol.busy"
@@ -1106,7 +1105,7 @@ export default {
           </div>
           <div class="col span-3">
             <LabeledInput
-              v-model="natRulePublicIp"
+              v-model:value="natRulePublicIp"
               :mode="mode"
               :disabled="busy"
               label="IONOS Nat Gateway Rule Public IP"
@@ -1117,7 +1116,7 @@ export default {
         <div class="row mt-10">
           <div class="col span-3">
             <LabeledInput
-              v-model="natRuleSourceSubnet"
+              v-model:value="natRuleSourceSubnet"
               :mode="mode"
               :disabled="busy"
               label="IONOS Nat Gateway Rule Source Subnet"
@@ -1126,7 +1125,7 @@ export default {
           </div>
           <div class="col span-3">
             <LabeledInput
-              v-model="natRuleTargetSubnet"
+              v-model:value="natRuleTargetSubnet"
               :mode="mode"
               :disabled="busy"
               label="IONOS Nat Gateway Rule Target Subnet"
@@ -1135,7 +1134,7 @@ export default {
           </div>
           <div class="col span-3">
             <LabeledInput
-              v-model="natRuleTargetPortRangeStart"
+              v-model:value="natRuleTargetPortRangeStart"
               :mode="mode"
               :disabled="busy"
               label="IONOS Nat Gateway Rule Port Range Start"
@@ -1144,7 +1143,7 @@ export default {
           </div>
           <div class="col span-3">
             <LabeledInput
-              v-model="natRuleTargetPortRangeEnd"
+              v-model:value="natRuleTargetPortRangeEnd"
               :mode="mode"
               :disabled="busy"
               label="IONOS Nat Gateway Rule Port Range End"

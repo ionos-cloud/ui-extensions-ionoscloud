@@ -1,14 +1,13 @@
 <script>
+
 import Banner from '@components/Banner/Banner.vue';
 import { LabeledInput } from '@components/Form/LabeledInput';
 import LabeledSelect from '@shell/components/form/LabeledSelect';
 import { _CREATE } from '@shell/config/query-params';
-import BusyButton from '../components/BusyButton.vue';
 
 export default {
   components: {
     Banner,
-    BusyButton,
     LabeledInput,
     LabeledSelect,
   },
@@ -48,6 +47,24 @@ export default {
     };
   },
 
+  watch: {
+    'value.decodedData.username'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+
+    'value.decodedData.password'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+
+    'value.decodedData.token'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+
+    'value.decodedData.endpoint'(neu) {
+      this.$emit('validationChanged', !!neu);
+    },
+  },
+
   computed: {
 
     canAuthenticate() {
@@ -79,7 +96,7 @@ export default {
       // Tell parent that the form is not invalid
       this.$emit('validationChanged', false);
     },
-  }
+  },
 };
 </script>
 
