@@ -3,6 +3,7 @@
 import Banner from '@components/Banner/Banner.vue';
 import { LabeledInput } from '@components/Form/LabeledInput';
 import LabeledSelect from '@shell/components/form/LabeledSelect';
+import SECRET from '@shell/config/types';
 import { _CREATE } from '@shell/config/query-params';
 
 export default {
@@ -29,16 +30,12 @@ export default {
       type: 'nodedriver',
       id:   'ionoscloud'
     });
+    const secret = await this.$store.dispatch('management/find', { type: SECRET, id: this.value.id.replace(':', '/') });
+    this.value.setData('username', atob(secret.data['ionoscloudcredentialConfig-username']));
+    this.value.setData('endpoint', atob(secret.data['ionoscloudcredentialConfig-endpoint']));
   },
 
   data() {
-    if (this.mode !== _CREATE) {
-      this.value.decodedData.username = this.value.annotations['ionoscloud.cattle.io/username'];
-      this.value.decodedData.password = this.value.annotations['ionoscloud.cattle.io/password'];
-      this.value.decodedData.token = this.value.annotations['ionoscloud.cattle.io/token'];
-      this.value.decodedData.endpoint = this.value.annotations['ionoscloud.cattle.io/endpoint'] || 'https://api.ionos.com/cloudapi/v6';
-    }
-
     return {
       busy:           false,
       driver:         {},
@@ -80,15 +77,6 @@ export default {
 
   methods: {
     test() {
-      this.value.annotations['ionoscloud.cattle.io/username'] = this.value.decodedData.username;
-      this.value.annotations['ionoscloud.cattle.io/password'] = this.value.decodedData.password;
-      this.value.annotations['ionoscloud.cattle.io/token'] = this.value.decodedData.token;
-      this.value.annotations['ionoscloud.cattle.io/endpoint'] = this.value.decodedData.endpoint;
-
-      this.value.username = this.value.decodedData.username;
-      this.value.password = this.value.decodedData.password;
-      this.value.token = this.value.decodedData.token;
-      this.value.endpoint = this.value.decodedData.endpoint;
       return true;
     },
 
