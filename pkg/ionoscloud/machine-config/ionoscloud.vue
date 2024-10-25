@@ -4,22 +4,24 @@ import { Banner } from '@components/Banner';
 import CreateEditView from '@shell/mixins/create-edit-view';
 import LabeledSelect from '@shell/components/form/LabeledSelect';
 import { LabeledInput } from '@components/Form/LabeledInput';
+import { NORMAN, SECRET } from '@shell/config/types';
 import { Checkbox } from '@components/Form/Checkbox';
 import { StringList } from '@components/StringList';
 import { stringify } from '@shell/utils/error';
 import { _VIEW } from '@shell/config/query-params';
 import FileSelector from '../components/FileSelector';
+import * as Ionos from '@ionos-cloud/sdk-nodejs/';
 
 import { LabeledTooltip } from '@rancher/components';
 
-function initLocation(initialValue) {
-  let select_options = [
+function initLocation(initialValue, apiSelectOptions) {
+  let selectOptions = [
     {
       label: 'Las Vegas, USA',
       value: {'value': 'us/las', 'name': 'Las Vegas, USA'}
     },
     {
-      label:'Newark, USA',
+      label: 'Newark, USA',
       value: {'value': 'us/ewr', 'name':'Newark, USA'}
     },
     {
@@ -43,16 +45,31 @@ function initLocation(initialValue) {
       value: {'value': 'fr/par', 'name': 'Paris, France'}
     },
   ]
-  let selected_option = select_options[0].value
 
-  select_options.forEach(element => {
-    if (element.value.value == initialValue) {
+  let usedSelectOptions = apiSelectOptions || selectOptions
+  let usedInitialValue = initialValue || usedSelectOptions[0].value.value
+
+  let selected_option = usedSelectOptions[0].value
+  let found = false
+
+  usedSelectOptions.forEach(element => {
+    if (element.value.value == usedInitialValue) {
       selected_option = element.value
+      found = true
     }
-  }); 
+  })
+  
+  if (!found) {
+    let newElem = {
+      label: usedInitialValue,
+      value: {'value': usedInitialValue, 'name': usedInitialValue}
+    }
+    usedSelectOptions.push(newElem)
+    selected_option = newElem.value
+  }
   
   return {
-    options: select_options,
+    options: usedSelectOptions,
     selected: selected_option,
     busy:     false,
     enabled:  false,
@@ -117,8 +134,8 @@ function initserverAvailabilityZone(initialValue) {
   };
 }
 
-function initTemplate(initialValue) {
-  let select_options = [
+function initTemplate(initialValue, apiSelectOptions) {
+  let selectOptions = [
     {
       label: 'XS',
       value: {'value': 'CUBES XS', 'name': 'XS'}
@@ -152,17 +169,30 @@ function initTemplate(initialValue) {
       value: {'value': 'CUBES 4XL', 'name': '4XL'}
     },
   ]
-  let selected_option = select_options[0].value
+  let usedSelectOptions = apiSelectOptions || selectOptions
+  let usedInitialValue = initialValue || usedSelectOptions[0].value.value
+  let selectedOption = usedSelectOptions[0].value
+  let found = false
 
-  select_options.forEach(element => {
-    if (element.value.value == initialValue) {
-      selected_option = element.value
+  usedSelectOptions.forEach(element => {
+    if (element.value.value == usedInitialValue) {
+      selectedOption = element.value
+      found = true
     }
-  }); 
+  });
+  
+  if (!found) {
+    let newElem = {
+      label: usedInitialValue,
+      value: {'value': usedInitialValue, 'name': usedInitialValue}
+    }
+    usedSelectOptions.push(newElem)
+    selectedOption = newElem.value
+  }
   
   return {
-    options: select_options,
-    selected: selected_option,
+    options: usedSelectOptions,
+    selected: selectedOption,
     busy:     false,
     enabled:  false,
   };
@@ -203,8 +233,8 @@ function initvolumeAvailabilityZone(initialValue) {
   };
 }
 
-function initCpuFamily(initialValue) {
-  let select_options = [
+function initCpuFamily(initialValue, apiSelectOptions) {
+  let selectOptions = [
     {
       label: 'Intel XEON (USA)',
       value: {'value': 'INTEL_XEON', 'name': 'Intel XEON (USA)'}
@@ -226,16 +256,29 @@ function initCpuFamily(initialValue) {
       value: {'value': 'AMD_EPYC', 'name': 'AMD EPYC'}
     },
   ]
-  let selected_option = select_options[0].value
+  let usedSelectOptions = apiSelectOptions || selectOptions
+  let usedInitialValue = initialValue || usedSelectOptions[0].value.value
+  let selected_option = usedSelectOptions[0].value
+  let found = false
 
-  select_options.forEach(element => {
-    if (element.value.value == initialValue) {
+  usedSelectOptions.forEach(element => {
+    if (element.value.value == usedInitialValue) {
       selected_option = element.value
+      found = true
     }
-  }); 
+  });
+  
+  if (!found) {
+    let newElem = {
+      label: usedInitialValue,
+      value: {'value': usedInitialValue, 'name': usedInitialValue}
+    }
+    usedSelectOptions.push(newElem)
+    selected_option = newElem.value
+  }
   
   return {
-    options: select_options,
+    options: usedSelectOptions,
     selected: selected_option,
     busy:     false,
     enabled:  false,
@@ -251,6 +294,22 @@ function initDiskType(initialValue) {
     {
       label: 'SSD',
       value: {'value': 'SSD', 'name': 'SSD'}
+    },
+    {
+      label: 'SSD Standard',
+      value: {'value': 'SSD Standard', 'name': 'SSD Standard'}
+    },
+    {
+      label: 'SSD Premium',
+      value: {'value': 'SSD Premium', 'name': 'SSD Premium'}
+    },
+    {
+      label: 'DAS',
+      value: {'value': 'DAS', 'name': 'DAS'}
+    },
+    {
+      label: 'ISO',
+      value: {'value': 'ISO', 'name': 'ISO'}
     },
   ]
   let selected_option = select_options[0].value
@@ -368,6 +427,81 @@ export default {
       return;
     }
 
+    try {
+      this.credential = await this.$store.dispatch('rancher/find', { type: NORMAN.CLOUD_CREDENTIAL, id: this.credentialId });
+    } catch (e) {
+      this.credential = null;
+    }
+
+    // Try and get the secret for the Cloud Credential as we need the plain-text password
+    try {
+      const id = this.credentialId.replace(':', '/');
+      const secret = await this.$store.dispatch('management/find', { type: SECRET, id });
+      const data = secret.data['ionoscloudcredentialConfig-password'];
+      const password = atob(data);
+      const data1 = secret.data['ionoscloudcredentialConfig-token'];
+      const token = atob(data1);
+      const data2 = secret.data['ionoscloudcredentialConfig-username'];
+      const username = atob(data2);
+      let authConfig = {};
+
+      if (token != undefined) {
+        authConfig.apiKey = token;
+      } else if (username != undefined && password != undefined) {
+        authConfig.username = username;
+        authConfig.password = password;
+      }
+      // setup authorization
+      const config = new Ionos.Configuration(authConfig);
+      const locationsApi = new Ionos.LocationsApi(config)
+      const templatesApi = new Ionos.TemplatesApi(config)
+
+      let locationResponse = locationsApi.locationsGet({depth: 1})
+
+      let templateResponse = await templatesApi.templatesGet({depth: 1})
+      if (templateResponse && templateResponse.status === 200) {
+        let templateSelectOptions = [];
+        console.log(templateResponse)
+        templateResponse.data.items.forEach((element) => {
+          templateSelectOptions.push({
+            label: element.properties.name,
+            value: {'value': element.properties.name, 'name': element.properties.name}
+          });
+        });
+
+        this.$set(this, 'template', initTemplate(this.value?.template, templateSelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value))))
+      }
+
+      locationResponse = await locationResponse
+      if (locationResponse && locationResponse.status === 200) {
+        let locationSelectOptions = [];
+        let cpuFamilies = new Set();
+        let cpuFamilySelectOptions = [];
+        locationResponse.data.items.forEach((element) => {
+          locationSelectOptions.push({
+            label: element.properties.name,
+            value: {'value': element.id, 'name': element.properties.name}
+          });
+          console.log(element.properties)
+          if (element.properties.cpuArchitecture) {
+            element.properties.cpuArchitecture.forEach((element) => {
+              cpuFamilies.add(element.cpuFamily)
+            })
+          }
+        });
+        cpuFamilies.forEach((element) => cpuFamilySelectOptions.push({
+          label: element,
+          value: {'value': element, 'name': element}
+        }))
+
+        this.$set(this, 'location', initLocation(this.value?.location, locationSelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value))))
+        this.$set(this, 'cpuFamily', initCpuFamily(this.value?.cpuFamily, cpuFamilySelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value))))
+      }
+    } catch (e) {
+      console.error(e); // eslint-disable-line no-console
+    }
+
+    this.$set(this, 'authenticating', true);
     this.$emit('validationChanged', true);
   },
 
@@ -403,12 +537,12 @@ export default {
       os:                          null,
       password:                    null,
       havePassword:                false,
-      location:                    initLocation(this.value?.location || 'us/las'),
+      location:                    initLocation(this.value?.location, null),
       serverType:                  initServerType(this.value?.serverType || 'ENTERPRISE'),
-      template:                    initTemplate(this.value?.template || 'CUBES XS'),
+      template:                    initTemplate(this.value?.template),
       serverAvailabilityZone:      initserverAvailabilityZone(this.value?.serverAvailabilityZone || 'AUTO'),
       volumeAvailabilityZone:      initvolumeAvailabilityZone(this.value?.volumeAvailabilityZone || 'AUTO'),
-      cpuFamily:                   initCpuFamily(this.value?.cpuFamily || 'INTEL_XEON'),
+      cpuFamily:                   initCpuFamily(this.value?.cpuFamily),
       diskType:                    initDiskType(this.value?.diskType || 'HDD'),
       cores:                       this.value?.cores || '2',
       ram:                         this.value?.ram || '2048',
