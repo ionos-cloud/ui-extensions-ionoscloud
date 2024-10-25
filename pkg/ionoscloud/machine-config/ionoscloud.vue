@@ -16,32 +16,40 @@ import { LabeledTooltip } from '@rancher/components';
 
 const LOCATION_SELECT_OPTIONS = [
   {
-    label: 'Las Vegas, USA',
-    value: {'value': 'us/las', 'name': 'Las Vegas, USA'}
+    label: 'frankfurt',
+    value: {'value': 'de/fra', 'name': 'frankfurt'}
   },
   {
-    label: 'Newark, USA',
-    value: {'value': 'us/ewr', 'name':'Newark, USA'}
+    label: 'berlin',
+    value: {'value': 'de/txl', 'name': 'berlin'}
   },
   {
-    label: 'Frankfurt, Germany',
-    value: {'value': 'de/fra', 'name': 'Frankfurt, Germany'}
+    label: 'logrono',
+    value: {'value': 'es/vit', 'name': 'logrono'}
   },
   {
-    label: 'Berlin, Germany',
-    value: {'value': 'de/txl', 'name': 'Berlin, Germany'}
+    label: 'paris',
+    value: {'value': 'fr/par', 'name': 'paris'}
   },
   {
-    label: 'London, UK',
-    value: {'value': 'gb/lhr', 'name': 'London, UK'}
+    label: 'worcester',
+    value: {'value': 'gb/bhx', 'name': 'worcester'}
   },
   {
-    label: 'Logroño, Spain',
-    value: {'value': 'es/vit', 'name': 'Logroño, Spain'}
+    label: 'london',
+    value: {'value': 'gb/lhr', 'name': 'london'}
   },
   {
-    label: 'Paris, France',
-    value: {'value': 'fr/par', 'name': 'Paris, France'}
+    label: 'newark',
+    value: {'value': 'us/ewr', 'name': 'newark'}
+  },
+  {
+    label: 'lasvegas',
+    value: {'value': 'us/las', 'name': 'lasvegas'}
+  },
+  {
+    label: 'lenexa',
+    value: {'value': 'us/mci', 'name': 'lenexa'}
   },
 ]
 const SERVER_TYPE_SELECT_OPTIONS = [
@@ -106,36 +114,44 @@ const VOLUME_AVAILABILITY_ZONE_SELECT_OPTIONS = [
 ]
 const TEMPLATE_SELECT_OPTIONS = [
   {
-    label: 'XS',
-    value: {'value': 'CUBES XS', 'name': 'XS'}
+    label: 'Basic Cube L',
+    value: {'value': 'Basic Cube L', 'name': 'Basic Cube L'}
   },
   {
-    label: 'S',
-    value: {'value': 'CUBES S', 'name': 'S'}
+    label: 'Basic Cube M',
+    value: {'value': 'Basic Cube M', 'name': 'Basic Cube M'}
   },
   {
-    label: 'M',
-    value: {'value': 'CUBES M', 'name': 'M'}
+    label: 'Basic Cube S',
+    value: {'value': 'Basic Cube S', 'name': 'Basic Cube S'}
   },
   {
-    label: 'L',
-    value: {'value': 'CUBES L', 'name': 'L'}
+    label: 'Basic Cube XL',
+    value: {'value': 'Basic Cube XL', 'name': 'Basic Cube XL'}
   },
   {
-    label: 'XL',
-    value: {'value': 'CUBES XL', 'name': 'XL'}
+    label: 'Basic Cube XS',
+    value: {'value': 'Basic Cube XS', 'name': 'Basic Cube XS'}
   },
   {
-    label: 'XXL',
-    value: {'value': 'CUBES XXL', 'name': 'XXL'}
+    label: 'Memory Cube L',
+    value: {'value': 'Memory Cube L', 'name': 'Memory Cube L'}
   },
   {
-    label: '3XL',
-    value: {'value': 'CUBES 3XL', 'name': '3XL'}
+    label: 'Memory Cube L',
+    value: {'value': 'Memory Cube L', 'name': 'Memory Cube L'}
   },
   {
-    label: '4XL',
-    value: {'value': 'CUBES 4XL', 'name': '4XL'}
+    label: 'Memory Cube M',
+    value: {'value': 'Memory Cube M', 'name': 'Memory Cube M'}
+  },
+  {
+    label: 'Memory Cube S',
+    value: {'value': 'Memory Cube S', 'name': 'Memory Cube S'}
+  },
+  {
+    label: 'Memory Cube XL',
+    value: {'value': 'Memory Cube XL', 'name': 'Memory Cube XL'}
   },
 ]
 const DISK_TYPE_SELECT_OPTIONS = [
