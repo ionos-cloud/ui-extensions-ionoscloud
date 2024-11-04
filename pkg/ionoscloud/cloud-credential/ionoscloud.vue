@@ -31,6 +31,7 @@ export default {
       type: 'nodedriver',
       id:   'ionoscloud'
     });
+    this.value.setData('endpoint', 'https://api.ionos.com/cloudapi/v6')
 
     const secret = await this.$store.dispatch('management/find', { type: SECRET, id: this.value.id.replace(':', '/') });
     this.value.setData('username', atob(secret.data['ionoscloudcredentialConfig-username']));
@@ -115,7 +116,7 @@ export default {
     <div class="row">
       <div class="col span-12">
         <LabeledInput
-          :value="value.decodedData.endpoint || 'https://api.ionos.com/cloudapi/v6'"
+          :value="value.decodedData.endpoint"
           class="mt-20"
           label-key="driver.ionoscloud.auth.fields.endpoint"
           placeholder-key="driver.ionoscloud.auth.placeholders.endpoint"

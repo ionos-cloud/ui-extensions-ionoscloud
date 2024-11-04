@@ -321,13 +321,18 @@ export default {
     try {
       const id = this.credentialId.replace(':', '/');
       const secret = await this.$store.dispatch('management/find', { type: SECRET, id });
-      const data = secret.data['ionoscloudcredentialConfig-password'];
+      let data = secret.data['ionoscloudcredentialConfig-password'];
       const password = atob(data);
-      const data1 = secret.data['ionoscloudcredentialConfig-token'];
-      const token = atob(data1);
-      const data2 = secret.data['ionoscloudcredentialConfig-username'];
-      const username = atob(data2);
-      let authConfig = {};
+      data = secret.data['ionoscloudcredentialConfig-token'];
+      const token = atob(data);
+      data = secret.data['ionoscloudcredentialConfig-username'];
+      const username = atob(data);
+      data = secret.data['ionoscloudcredentialConfig-endpoint'];
+      const endpoint = atob(data);
+
+      let authConfig = {
+        basePath: endpoint
+      };
 
       if (token != undefined) {
         authConfig.apiKey = token;
@@ -351,8 +356,6 @@ export default {
             value: {'value': element.properties.name, 'name': element.properties.name}
           });
         });
-
-        console.log(templateSelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value)))
 
         this.$set(this, 'template', initSelect(
           this.value?.template,
@@ -381,8 +384,6 @@ export default {
           label: element,
           value: {'value': element, 'name': element}
         }))
-
-        console.log(locationSelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value)))
 
         this.$set(this, 'location', initSelect(
           this.value?.location,
