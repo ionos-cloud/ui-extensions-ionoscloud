@@ -6,7 +6,7 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@rancher/shell": "1.2.3",
+    "@rancher/shell": "0.5.3",
     "@rancher/components": "0.2.1-alpha.0",
     "@ionos-cloud/sdk-nodejs": "^6.1.4"
   },
