@@ -4,7 +4,12 @@
   "version": "0.1.4",
   "private": false,
   "icon": "https://raw.githubusercontent.com/ionos-cloud/ui-extensions-ionoscloud/main/pkg/ionoscloud/ionos.svg",
-  "rancher": true,
+  "rancher": {
+    "annotations": {
+      "catalog.cattle.io/rancher-version": "<= 2.9.0",
+      "catalog.cattle.io/ui-extensions-version": ">= 1.0.0"
+    }
+  },
   "scripts": {
     "dev": "./node_modules/.bin/nuxt dev",
     "nuxt": "./node_modules/.bin/nuxt"
