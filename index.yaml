@@ -20,5 +20,5 @@ entries:
       name: ionoscloud
       type: application
       urls:
-      - https://github.com/ionos-cloud/ui-extensions-ionoscloud/releases/download/ionoscloud-0.1.4/ionoscloud-0.1.4.tgz
+      - https://github.com/ionos-cloud/ui-extensions-ionoscloud/releases/download/ionoscloud-0.3.0/ionoscloud-0.3.0.tgz
       version: 0.3.0
