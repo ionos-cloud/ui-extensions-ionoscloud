@@ -12,7 +12,7 @@ defaults:
 
 jobs:
   build-extension-charts:
-    uses: rancher/dashboard/.github/workflows/build-extension-charts.yml@release-2.9
+    uses: rancher/dashboard/.github/workflows/build-extension-charts.yml@release-2.11
     permissions:
       actions: write
       contents: write
@@ -20,4 +20,4 @@ jobs:
       pages: write
     with:
       target_branch: main
-      tagged_release: ${{ github.ref_name }}"
+      tagged_release: "${{ github.ref_name }}"

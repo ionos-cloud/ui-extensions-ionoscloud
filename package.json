@@ -5,8 +5,8 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@rancher/components": "0.2.1-alpha.0",
-    "@rancher/shell": "3.0.3"
+    "@rancher/components": "0.3.0-alpha.1",
+    "@rancher/shell": "3.0.4"
   },
   "resolutions": {
     "@types/node": "~20.10.0",
