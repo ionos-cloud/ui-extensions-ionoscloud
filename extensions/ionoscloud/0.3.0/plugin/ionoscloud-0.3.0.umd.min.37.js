@@ -1,0 +1,2 @@
+(("undefined"!==typeof self?self:this)["webpackChunkionoscloud_0_3_0"]=("undefined"!==typeof self?self:this)["webpackChunkionoscloud_0_3_0"]||[]).push([[37],{9037:function(e){const n=[{driver:{ionoscloud:{auth:{fields:{password:"Password",username:"Username",token:"Token",endpoint:"Endpoint"},placeholders:{password:"($IONOSCLOUD_PASSWORD)",username:"($IONOSCLOUD_USERNAME)",token:"($IONOSCLOUD_TOKEN)",endpoint:"($IONOSCLOUD_ENDPOINT)"}}}}}];e.exports=n.length<=1?n[0]:n}}]);
+//# sourceMappingURL=ionoscloud-0.3.0.umd.min.37.js.map
