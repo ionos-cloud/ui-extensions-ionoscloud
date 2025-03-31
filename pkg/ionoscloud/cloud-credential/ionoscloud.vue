@@ -99,7 +99,7 @@ export default {
           placeholder-key="driver.ionoscloud.auth.placeholders.username"
           type="text"
           :mode="mode"
-          @input="value.setData('username', $event);"
+          @update:value="value.setData('username', $event);"
         />
       </div>
       <div class="col span-6">
@@ -110,7 +110,7 @@ export default {
           placeholder-key="driver.ionoscloud.auth.placeholders.password"
           type="password"
           :mode="mode"
-          @input="value.setData('password', $event);"
+          @update:value="value.setData('password', $event);"
         />
       </div>
     </div>
@@ -123,7 +123,7 @@ export default {
           placeholder-key="driver.ionoscloud.auth.placeholders.token"
           type="text"
           :mode="mode"
-          @input="value.setData('token', $event);"
+          @update:value="value.setData('token', $event);"
         />
       </div>
     </div>
@@ -136,7 +136,7 @@ export default {
           placeholder-key="driver.ionoscloud.auth.placeholders.endpoint"
           type="text"
           :mode="mode"
-          @input="value.setData('endpoint', $event);"
+          @update:value="value.setData('endpoint', $event);"
         />
       </div>
     </div>
