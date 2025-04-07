@@ -1,26 +1,28 @@
 name: Build and Release Extension Charts
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       target_branch:
         required: true
         type: string
+        description: "target_branch"
       tagged_release:
         required: true
         type: string
+        description: "tagged_release"
       is_test:
         required: false
         type: string
+        description: "is_test"
       test_ext_repo:
         required: false
         type: string
+        description: "test_ext_repo"
       test_ext_branch:
         required: false
         type: string
-    outputs:
-      build-job-status: 
-        value: ${{ jobs.build-extension-artifact.outputs.build-status }}
+        description: "test_ext_branch"
 
 env:
   ACTIONS_RUNNER_DEBUG: false
