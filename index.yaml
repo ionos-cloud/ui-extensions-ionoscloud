@@ -63,6 +63,6 @@ entries:
     name: ionoscloud
     type: application
     urls:
-    - https://github.com/ionos-cloud/ui-extensions-ionoscloud/releases/download/ionoscloud-0.1.4/ionoscloud-0.1.4.tgz
+    - assets/ionoscloud/ionoscloud-0.1.4.tgz
     version: 0.1.4
 generated: "2025-04-07T16:11:09.244870184Z"
