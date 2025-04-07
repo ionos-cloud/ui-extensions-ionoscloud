@@ -58,7 +58,7 @@ entries:
     created: "2024-03-29T14:04:16.299282336Z"
     description: Adds Machine Config and Cloud Credeantials for the ionoscloud rancher
       driver
-    digest: f8b3bcfb24d0486ffc09167b6834732f20729be811b7c6434eeb4b318cd2fc62
+    digest: 470f73123ea595df53332458630978fa77c31a41c814c0cf3ff4ea308e507aeb
     icon: https://raw.githubusercontent.com/ionos-cloud/ui-extensions-ionoscloud/main/pkg/ionoscloud/ionos.svg
     name: ionoscloud
     type: application
