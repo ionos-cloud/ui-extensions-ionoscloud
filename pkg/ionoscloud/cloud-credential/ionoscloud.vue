@@ -3,7 +3,7 @@
 import Banner from '@components/Banner/Banner.vue';
 import { LabeledInput } from '@components/Form/LabeledInput';
 import LabeledSelect from '@shell/components/form/LabeledSelect';
-import SECRET from '@shell/config/types';
+import { SECRET } from '@shell/config/types';
 import { _CREATE } from '@shell/config/query-params';
 
 export default {
