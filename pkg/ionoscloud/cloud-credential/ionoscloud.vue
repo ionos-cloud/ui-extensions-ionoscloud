@@ -3,7 +3,7 @@
 import Banner from '@components/Banner/Banner.vue';
 import { LabeledInput } from '@components/Form/LabeledInput';
 import LabeledSelect from '@shell/components/form/LabeledSelect';
-import SECRET from '@shell/config/types';
+import { SECRET } from '@shell/config/types';
 import { _CREATE } from '@shell/config/query-params';
 
 export default {
@@ -30,6 +30,8 @@ export default {
       type: 'nodedriver',
       id:   'ionoscloud'
     });
+    this.value.setData('endpoint', 'https://api.ionos.com/cloudapi/v6')
+
     const secret = await this.$store.dispatch('management/find', { type: SECRET, id: this.value.id.replace(':', '/') });
     this.value.setData('username', atob(secret.data['ionoscloudcredentialConfig-username']));
     this.value.setData('endpoint', atob(secret.data['ionoscloudcredentialConfig-endpoint']));
