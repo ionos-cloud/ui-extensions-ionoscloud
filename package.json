@@ -6,11 +6,12 @@
   },
   "dependencies": {
     "@rancher/components": "0.2.1-alpha.0",
-    "@rancher/shell": "2.0.1",
+    "@rancher/shell": "2.0.3",
     "cache-loader": "^4.1.0",
     "color": "4.2.3",
     "ip": "2.0.1",
-    "node-polyfill-webpack-plugin": "^3.0.0"
+    "node-polyfill-webpack-plugin": "^3.0.0",
+    "@ionos-cloud/sdk-nodejs": "^6.1.4"
   },
   "resolutions": {
     "@types/node": "~20.10.0",

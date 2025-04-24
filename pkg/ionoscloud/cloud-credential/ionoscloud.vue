@@ -30,6 +30,8 @@ export default {
       type: 'nodedriver',
       id:   'ionoscloud'
     });
+    this.value.setData('endpoint', 'https://api.ionos.com/cloudapi/v6')
+
     const secret = await this.$store.dispatch('management/find', { type: SECRET, id: this.value.id.replace(':', '/') });
     this.value.setData('username', atob(secret.data['ionoscloudcredentialConfig-username']));
     this.value.setData('endpoint', atob(secret.data['ionoscloudcredentialConfig-endpoint']));
@@ -43,24 +45,6 @@ export default {
       allowBusy:      false,
       error:          '',
     };
-  },
-
-  watch: {
-    'value.decodedData.username'(neu) {
-      this.$emit('validationChanged', !!neu);
-    },
-
-    'value.decodedData.password'(neu) {
-      this.$emit('validationChanged', !!neu);
-    },
-
-    'value.decodedData.token'(neu) {
-      this.$emit('validationChanged', !!neu);
-    },
-
-    'value.decodedData.endpoint'(neu) {
-      this.$emit('validationChanged', !!neu);
-    },
   },
 
   computed: {
