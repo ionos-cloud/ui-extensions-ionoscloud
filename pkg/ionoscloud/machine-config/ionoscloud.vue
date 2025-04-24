@@ -357,11 +357,11 @@ export default defineComponent({
           });
         });
 
-        this.$set(this, 'template', initSelect(
+        this.template = initSelect(
           this.value?.template,
           TEMPLATE_SELECT_OPTIONS,
           templateSelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value)),
-        ))
+        )
       }
 
       locationResponse = await locationResponse
@@ -384,23 +384,22 @@ export default defineComponent({
           label: element,
           value: {'value': element, 'name': element}
         }))
-
-        this.$set(this, 'location', initSelect(
+        this.location = initSelect(
           this.value?.location,
           LOCATION_SELECT_OPTIONS,
           locationSelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value)),
-        ))
-        this.$set(this, 'cpuFamily', initSelect(
+        )
+        this.cpuFamily = initSelect(
           this.value?.cpuFamily,
           CPU_FAMILY_SELECT_OPTIONS,
           cpuFamilySelectOptions.sort((a, b) => a.value.value.localeCompare(b.value.value)),
-        ))
+        )
       }
     } catch (e) {
       console.error(e); // eslint-disable-line no-console
     }
 
-    this.$set(this, 'authenticating', true);
+    this.authenticating = true;
     this.$emit('validationChanged', true);
   },
 
