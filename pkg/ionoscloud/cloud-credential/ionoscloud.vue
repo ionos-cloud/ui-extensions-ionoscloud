@@ -30,6 +30,8 @@ export default {
       type: 'nodedriver',
       id:   'ionoscloud'
     });
+    this.value.setData('endpoint', 'https://api.ionos.com/cloudapi/v6')
+
     const secret = await this.$store.dispatch('management/find', { type: SECRET, id: this.value.id.replace(':', '/') });
     this.value.setData('username', atob(secret.data['ionoscloudcredentialConfig-username']));
     this.value.setData('endpoint', atob(secret.data['ionoscloudcredentialConfig-endpoint']));
