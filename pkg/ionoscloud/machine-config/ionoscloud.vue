@@ -139,10 +139,6 @@ const TEMPLATE_SELECT_OPTIONS = [
     value: {'value': 'Memory Cube L', 'name': 'Memory Cube L'}
   },
   {
-    label: 'Memory Cube L',
-    value: {'value': 'Memory Cube L', 'name': 'Memory Cube L'}
-  },
-  {
     label: 'Memory Cube M',
     value: {'value': 'Memory Cube M', 'name': 'Memory Cube M'}
   },
