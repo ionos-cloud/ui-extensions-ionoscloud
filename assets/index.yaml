@@ -11,6 +11,27 @@ entries:
       catalog.cattle.io/ui-component: plugins
       catalog.cattle.io/ui-extensions-version: '>= 3.0.0 < 4.0.0'
     apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-08-11T11:34:22.845134947Z"
+    description: Adds Machine Config and Cloud Credeantials for the ionoscloud rancher
+      driver
+    digest: cb9b5e501d49c3d16ea057f131c9a0828b12942b7e26eed0596cd4700a1c9197
+    icon: https://raw.githubusercontent.com/ionos-cloud/ui-extensions-ionoscloud/main/pkg/ionoscloud/ionos.svg
+    name: ionoscloud
+    type: application
+    urls:
+    - assets/ionoscloud/ionoscloud-0.4.1.tgz
+    version: 0.4.1
+  - annotations:
+      catalog.cattle.io/certified: rancher
+      catalog.cattle.io/namespace: cattle-ui-plugin-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux, windows
+      catalog.cattle.io/rancher-version: '>= 2.11.0-0'
+      catalog.cattle.io/scope: management
+      catalog.cattle.io/ui-component: plugins
+      catalog.cattle.io/ui-extensions-version: '>= 3.0.0 < 4.0.0'
+    apiVersion: v2
     appVersion: 0.4.0
     created: "2025-08-05T08:59:41.299841111Z"
     description: Adds Machine Config and Cloud Credeantials for the ionoscloud rancher
@@ -128,4 +149,4 @@ entries:
     urls:
     - assets/ionoscloud/ionoscloud-0.1.4.tgz
     version: 0.1.4
-generated: "2025-08-05T08:59:41.299444149Z"
+generated: "2025-08-11T11:34:22.844763697Z"
