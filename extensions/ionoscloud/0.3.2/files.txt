@@ -1,0 +1,13 @@
+plugin/ionoscloud-0.3.2.umd.min.15.js
+plugin/ionoscloud-0.3.2.umd.min.15.js.map
+plugin/ionoscloud-0.3.2.umd.min.37.js
+plugin/ionoscloud-0.3.2.umd.min.37.js.map
+plugin/ionoscloud-0.3.2.umd.min.438.js
+plugin/ionoscloud-0.3.2.umd.min.438.js.map
+plugin/ionoscloud-0.3.2.umd.min.cloud-credential.js
+plugin/ionoscloud-0.3.2.umd.min.cloud-credential.js.map
+plugin/ionoscloud-0.3.2.umd.min.js
+plugin/ionoscloud-0.3.2.umd.min.js.map
+plugin/ionoscloud-0.3.2.umd.min.machine-config.js
+plugin/ionoscloud-0.3.2.umd.min.machine-config.js.map
+plugin/package.json
