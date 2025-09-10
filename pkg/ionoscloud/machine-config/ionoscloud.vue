@@ -462,7 +462,7 @@ export default defineComponent({
       natLansToGateways:           this.getNatLansToGateways(this.value?.natLansToGateways) || [],
       natFlowlogs:                 this.value?.natFlowlogs || [],
       natPublicIps:                this.value?.natPublicIps || [],
-      appendRkeUserdata:           this.value?.appendRkeUserdata || false,
+      appendRkeProvision:          this.value?.appendRkeProvision || false,
       natRules:                    this.mode == 'create' ? defaultNatRules : this.value?.natRules || [],
       natRuleName:                 '',
       natRuleType:                 'SNAT',
@@ -724,7 +724,7 @@ export default defineComponent({
       this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
       this.value.natId = this.natId;
       this.value.natName = this.natName;
-      this.value.appendRkeUserdata = this.appendRkeUserdata;
+      this.value.appendRkeProvision = this.appendRkeProvision;
       this.value.createNat = this.createNat;
       this.value.natLansToGateways = this.formatNatLansToGateways();
       this.value.natFlowlogs = this.natFlowlogs;
@@ -918,7 +918,7 @@ export default defineComponent({
         <div class="col span-4">
           <Checkbox
             label="Append RKE provisioning config in the userdata sent to the server"
-            v-model:value="appendRkeUserdata"
+            v-model:value="appendRkeProvision"
             :mode="mode"
             :disabled="busy"
           />
