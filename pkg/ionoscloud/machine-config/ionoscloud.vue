@@ -441,7 +441,7 @@ export default defineComponent({
       cores:                       this.value?.cores || '2',
       ram:                         this.value?.ram || '2048',
       diskSize:                    this.value?.diskSize || '50',
-      image:                       this.value?.image || 'ubuntu:20.04',
+      image:                       this.value?.image || 'ubuntu:latest',
       imagePassword:               this.value?.imagePassword,
       cloudInit:                   this.value?.cloudInit,
       sshUser:                     this.value?.sshUser || 'root',
@@ -451,6 +451,7 @@ export default defineComponent({
       lanId:                       this.value?.lanId,
       lanName:                     this.value?.lanName || 'docker-machine-lan',
       privateLan:                  this.value?.privateLan || false,
+      nicMultiQueue:               this.value?.nicMultiQueue || false,
       nicDhcp:                     this.value?.nicDhcp || false,
       nicIps:                      this.value?.nicIps || [],
       additionalLans:              this.value?.additionalLans || [],
@@ -462,7 +463,7 @@ export default defineComponent({
       natLansToGateways:           this.getNatLansToGateways(this.value?.natLansToGateways) || [],
       natFlowlogs:                 this.value?.natFlowlogs || [],
       natPublicIps:                this.value?.natPublicIps || [],
-      appendRkeUserdata:           this.value?.appendRkeUserdata || false,
+      appendRkeCloudInit:          this.value?.appendRkeCloudInit || true,
       natRules:                    this.mode == 'create' ? defaultNatRules : this.value?.natRules || [],
       natRuleName:                 '',
       natRuleType:                 'SNAT',
@@ -717,6 +718,7 @@ export default defineComponent({
       this.value.lanId = this.lanId;
       this.value.lanName = this.lanName;
       this.value.privateLan = this.privateLan;
+      this.value.nicMultiQueue = this.nicMultiQueue;
       this.value.nicDhcp = this.nicDhcp;
       this.value.nicIps = this.nicIps;
       this.value.additionalLans = this.additionalLans;
@@ -724,7 +726,7 @@ export default defineComponent({
       this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
       this.value.natId = this.natId;
       this.value.natName = this.natName;
-      this.value.appendRkeUserdata = this.appendRkeUserdata;
+      this.value.appendRkeCloudInit = this.appendRkeCloudInit;
       this.value.createNat = this.createNat;
       this.value.natLansToGateways = this.formatNatLansToGateways();
       this.value.natFlowlogs = this.natFlowlogs;
@@ -918,7 +920,7 @@ export default defineComponent({
         <div class="col span-4">
           <Checkbox
             label="Append RKE provisioning config in the userdata sent to the server"
-            v-model:value="appendRkeUserdata"
+            v-model:value="appendRkeCloudInit"
             :mode="mode"
             :disabled="busy"
           />
@@ -1009,6 +1011,15 @@ export default defineComponent({
             @change="onChangeNicIps($event)"
           />
           <p class="help-block">Optional. IPBlock reserved IPs. If not set, the driver will reserve an IPBlock automatically or let the API set a private IP if the LAN is private</p>
+        </div>
+        <div class="col span-4">
+          <Checkbox
+            label="NIC Multi Queue"
+            v-model:value="nicMultiQueue"
+            :mode="mode"
+            :disabled="busy"
+          />
+          <p class="help-block">Activate or deactivate the Multi Queue feature on all NICs of this server.</p>
         </div>
       </div>
 
