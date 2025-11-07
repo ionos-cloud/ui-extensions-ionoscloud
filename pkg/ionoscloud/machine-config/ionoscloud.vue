@@ -151,7 +151,8 @@ const TEMPLATE_SELECT_OPTIONS = [
     value: {'value': 'Memory Cube XL', 'name': 'Memory Cube XL'}
   },
 ]
-const DISK_TYPE_SELECT_OPTIONS = [
+
+const ADDITIONAL_DISK_TYPE_OPTIONS = [
   {
     label: 'HDD',
     value: {'value': 'HDD', 'name': 'HDD'}
@@ -168,6 +169,9 @@ const DISK_TYPE_SELECT_OPTIONS = [
     label: 'SSD Premium',
     value: {'value': 'SSD Premium', 'name': 'SSD Premium'}
   },
+]
+
+const DISK_TYPE_SELECT_OPTIONS = ADDITIONAL_DISK_TYPE_OPTIONS.concat([
   {
     label: 'DAS',
     value: {'value': 'DAS', 'name': 'DAS'}
@@ -176,7 +180,7 @@ const DISK_TYPE_SELECT_OPTIONS = [
     label: 'ISO',
     value: {'value': 'ISO', 'name': 'ISO'}
   },
-]
+])
 
 function initSelect(initialValue, defaultSelectOptions, apiSelectOptions) {
   let usedSelectOptions = apiSelectOptions || defaultSelectOptions
@@ -455,6 +459,7 @@ export default defineComponent({
       nicDhcp:                     this.value?.nicDhcp || false,
       nicIps:                      this.value?.nicIps || [],
       additionalLans:              this.value?.additionalLans || [],
+      additionalDisks:             this.value?.additionalDisks || [],
       waitForIpChange:             this.value?.waitForIpChange || false,
       waitForIpChangeTimeout:      this.value?.waitForIpChangeTimeout || '600',
       natId:                       this.value?.natId,
@@ -523,6 +528,31 @@ export default defineComponent({
 
     onChangeAdditionalLans(event) {
       this.additionalLans = event;
+    },
+
+    onChangeAdditionalDisks(event) {
+
+      for (let el of event) {
+        let spl = el.split(':')
+        if (spl.length != 2) {
+          alert('Invalid entry detected: ' + el + '. The accepted format is DISK_TYPE:DISK_SIZE!');
+          return;
+        }
+        let diskType = spl[0]
+        if (!ADDITIONAL_DISK_TYPE_OPTIONS.map((val) => {return val.value.value}).includes(diskType)) {
+          alert('Invalid Disk Type detected: ' + diskType + '. Must the one of ' + ADDITIONAL_DISK_TYPE_OPTIONS.map((val) => {return val.value.value}));
+          return;
+        }
+        ADDITIONAL_DISK_TYPE_OPTIONS.map((val) => {return val.value.value})
+
+        let diskSize = spl[1]
+        if (Number.isNaN(parseInt(diskSize))) {
+          alert('Invalid disk size detected: ' + diskSize );
+          return;
+        }
+      }
+
+      this.additionalDisks = event.sort();
     },
 
     onChangeNatPublicIps(event) {
@@ -722,6 +752,7 @@ export default defineComponent({
       this.value.nicDhcp = this.nicDhcp;
       this.value.nicIps = this.nicIps;
       this.value.additionalLans = this.additionalLans;
+      this.value.additionalDisks = this.additionalDisks;
       this.value.waitForIpChange = this.waitForIpChange;
       this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
       this.value.natId = this.natId;
@@ -989,6 +1020,17 @@ export default defineComponent({
             @change="onChangeAdditionalLans($event)"
           />
           <p class="help-block">Optional. Exiting Ionos LAN names. Every LAN in the datacenter which has its name in this list will be connected to the server, names which are not found will be ignored.</p>
+        </div>
+        <div class="col span-4">
+          <StringList
+            label="Additional Disks"
+            v-model:value="additionalDisks"
+            :items="additionalDisks"
+            :mode="mode"
+            :disabled="busy"
+            @change="onChangeAdditionalDisks($event)"
+          />
+          <p class="help-block">Optional. Additional disks, the format for a disk is DISK_TYPE:SIZE.</p>
         </div>
       </div>
       <div class="row mt-10">
