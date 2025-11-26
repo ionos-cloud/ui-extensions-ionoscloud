@@ -468,7 +468,7 @@ export default defineComponent({
       natLansToGateways:           this.getNatLansToGateways(this.value?.natLansToGateways) || [],
       natFlowlogs:                 this.value?.natFlowlogs || [],
       natPublicIps:                this.value?.natPublicIps || [],
-      appendRkeCloudInit:          this.value?.appendRkeCloudInit || true,
+      appendRkeCloudInit:          this.value?.appendRkeCloudInit ?? true,
       natRules:                    this.mode == 'create' ? defaultNatRules : this.value?.natRules || [],
       natRuleName:                 '',
       natRuleType:                 'SNAT',
