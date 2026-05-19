@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@rancher/components": "0.3.0-alpha.4",
-    "@rancher/shell": "3.0.11",
+    "@rancher/shell": "3.0.9",
     "@ionos-cloud/sdk-nodejs": "^6.1.5"
   },
   "resolutions": {
