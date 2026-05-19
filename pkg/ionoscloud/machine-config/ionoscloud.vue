@@ -59,7 +59,7 @@ const SERVER_TYPE_SELECT_OPTIONS = [
     value: {'value': 'ENTERPRISE', 'name': 'Enterprise'}
   },
   {
-    label:'Cube',
+    label: 'Cube',
     value: {'value': 'CUBE', 'name':'Cube'}
   },
 ]
@@ -321,22 +321,18 @@ export default defineComponent({
     try {
       const id = this.credentialId.replace(':', '/');
       const secret = await this.$store.dispatch('management/find', { type: SECRET, id });
-      let data = secret.data['ionoscloudcredentialConfig-password'];
-      const password = atob(data);
-      data = secret.data['ionoscloudcredentialConfig-token'];
-      const token = atob(data);
-      data = secret.data['ionoscloudcredentialConfig-username'];
-      const username = atob(data);
-      data = secret.data['ionoscloudcredentialConfig-endpoint'];
-      const endpoint = atob(data);
+      const password = secret.data['ionoscloudcredentialConfig-password'] ? atob(secret.data['ionoscloudcredentialConfig-password']) : undefined;
+      const token = secret.data['ionoscloudcredentialConfig-token'] ? atob(secret.data['ionoscloudcredentialConfig-token']) : undefined;
+      const username = secret.data['ionoscloudcredentialConfig-username'] ? atob(secret.data['ionoscloudcredentialConfig-username']) : undefined;
+      const endpoint = secret.data['ionoscloudcredentialConfig-endpoint'] ? atob(secret.data['ionoscloudcredentialConfig-endpoint']) : undefined;
 
       let authConfig = {
         basePath: endpoint
       };
 
-      if (token != undefined) {
+      if (token) {
         authConfig.apiKey = token;
-      } else if (username != undefined && password != undefined) {
+      } else if (username && password) {
         authConfig.username = username;
         authConfig.password = password;
       }
