@@ -2,7 +2,7 @@
   "name": "ui-extensions-ionoscloud",
   "version": "0.1.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "dependencies": {
     "@rancher/components": "0.3.0-alpha.4",
