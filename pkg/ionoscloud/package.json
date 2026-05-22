@@ -1,12 +1,12 @@
 {
   "name": "ionoscloud",
   "description": "Adds Machine Config and Cloud Credeantials for the ionoscloud rancher driver",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": false,
   "icon": "https://raw.githubusercontent.com/ionos-cloud/ui-extensions-ionoscloud/main/pkg/ionoscloud/ionos.svg",
   "rancher": {
     "annotations": {
-      "catalog.cattle.io/rancher-version": ">= 2.13.0-0 < 2.14.0-0",
+      "catalog.cattle.io/rancher-version": ">= 2.14.0-0 < 2.15.0-0",
       "catalog.cattle.io/ui-extensions-version": ">= 3.0.0 < 4.0.0"
     }
   },
