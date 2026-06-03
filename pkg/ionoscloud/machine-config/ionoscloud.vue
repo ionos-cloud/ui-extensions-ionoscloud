@@ -455,6 +455,7 @@ export default defineComponent({
       nicDhcp:                     this.value?.nicDhcp || false,
       nicIps:                      this.value?.nicIps || [],
       additionalLans:              this.value?.additionalLans || [],
+      additionalLansIds:           this.value?.additionalLansIds || [],
       additionalDisks:             this.value?.additionalDisks || [],
       waitForIpChange:             this.value?.waitForIpChange || false,
       waitForIpChangeTimeout:      this.value?.waitForIpChangeTimeout || '600',
@@ -524,6 +525,17 @@ export default defineComponent({
 
     onChangeAdditionalLans(event) {
       this.additionalLans = event;
+    },
+
+    onChangeAdditionalLansIds(event) {
+      for (let id of event) {
+        if (Number.isNaN(parseInt(id))) {
+          alert('Invalid LAN ID detected: ' + id );
+          return;
+        }
+      }
+
+      this.additionalLansIds = event;
     },
 
     onChangeAdditionalDisks(event) {
@@ -748,6 +760,7 @@ export default defineComponent({
       this.value.nicDhcp = this.nicDhcp;
       this.value.nicIps = this.nicIps;
       this.value.additionalLans = this.additionalLans;
+      this.value.additionalLansIds = this.additionalLansIds;
       this.value.additionalDisks = this.additionalDisks;
       this.value.waitForIpChange = this.waitForIpChange;
       this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
@@ -1006,6 +1019,17 @@ export default defineComponent({
         </div>
       </div>
       <div class="row mt-10">
+        <div class="col span-4">
+          <StringList
+            label="Additional LAN IDs"
+            v-model:value="additionalLansIds"
+            :items="additionalLansIds"
+            :mode="mode"
+            :disabled="busy"
+            @change="onChangeAdditionalLansIds($event)"
+          />
+          <p class="help-block">Optional. Existing Ionos LAN IDs. Every LAN in the datacenter which has its ID in this list will be connected to the server, IDs which are not found will be ignored.</p>
+        </div>
         <div class="col span-4">
           <StringList
             label="Additional LANs"
