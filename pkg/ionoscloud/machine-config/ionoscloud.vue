@@ -456,6 +456,7 @@ export default defineComponent({
       nicIps:                      this.value?.nicIps || [],
       additionalLans:              this.value?.additionalLans || [],
       additionalLansIds:           this.value?.additionalLansIds || [],
+      additionalNicsDhcp:          this.value?.additionalNicsDhcp || [],
       additionalDisks:             this.value?.additionalDisks || [],
       waitForIpChange:             this.value?.waitForIpChange || false,
       waitForIpChangeTimeout:      this.value?.waitForIpChangeTimeout || '600',
@@ -536,6 +537,18 @@ export default defineComponent({
       }
 
       this.additionalLansIds = event;
+    },
+
+    onChangeAdditionalNicsDhcp(event) {
+      for (let el of event) {
+        let spl = el.split('=');
+        if (spl.length != 2 || Number.isNaN(parseInt(spl[0])) || !['true', 'false'].includes(spl[1].trim().toLowerCase())) {
+          alert('Invalid entry detected: ' + el + '. The accepted format is LAN_ID=true/false (e.g. 5=false)!');
+          return;
+        }
+      }
+
+      this.additionalNicsDhcp = event;
     },
 
     onChangeAdditionalDisks(event) {
@@ -761,6 +774,7 @@ export default defineComponent({
       this.value.nicIps = this.nicIps;
       this.value.additionalLans = this.additionalLans;
       this.value.additionalLansIds = this.additionalLansIds;
+      this.value.additionalNicsDhcp = this.additionalNicsDhcp;
       this.value.additionalDisks = this.additionalDisks;
       this.value.waitForIpChange = this.waitForIpChange;
       this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
@@ -1065,6 +1079,17 @@ export default defineComponent({
         </div>
         <div class="col span-4">
           <StringList
+            label="Additional NICs DHCP"
+            v-model:value="additionalNicsDhcp"
+            :items="additionalNicsDhcp"
+            :mode="mode"
+            :disabled="busy"
+            @change="onChangeAdditionalNicsDhcp($event)"
+          />
+          <p class="help-block">Optional. Per-additional-NIC DHCP, as LAN_ID=true/false entries (e.g. 5=false). Additional LANs not listed keep DHCP on. Does not affect the primary NIC, which uses "NIC DHCP".</p>
+        </div>
+        <div class="col span-4">
+          <StringList
             label="NIC Ips"
             v-model:value="nicIps"
             :items="nicIps"
@@ -1074,6 +1099,9 @@ export default defineComponent({
           />
           <p class="help-block">Optional. IPBlock reserved IPs. If not set, the driver will reserve an IPBlock automatically or let the API set a private IP if the LAN is private</p>
         </div>
+      </div>
+
+      <div class="row mt-10">
         <div class="col span-4">
           <Checkbox
             label="NIC Multi Queue"
@@ -1083,9 +1111,6 @@ export default defineComponent({
           />
           <p class="help-block">Activate or deactivate the Multi Queue feature on all NICs of this server.</p>
         </div>
-      </div>
-
-      <div class="row mt-10">
         <div class="col span-4">
           <Checkbox
             label="Wait for NIC IP change"
