@@ -456,7 +456,7 @@ export default defineComponent({
       nicIps:                      this.value?.nicIps || [],
       additionalLans:              this.value?.additionalLans || [],
       additionalLansIds:           this.value?.additionalLansIds || [],
-      additionalNicsDhcp:          this.value?.additionalNicsDhcp || [],
+      additionalLansDhcp:          this.value?.additionalLansDhcp || [],
       additionalDisks:             this.value?.additionalDisks || [],
       waitForIpChange:             this.value?.waitForIpChange || false,
       waitForIpChangeTimeout:      this.value?.waitForIpChangeTimeout || '600',
@@ -539,7 +539,7 @@ export default defineComponent({
       this.additionalLansIds = event;
     },
 
-    onChangeAdditionalNicsDhcp(event) {
+    onChangeAdditionalLansDhcp(event) {
       for (let el of event) {
         let spl = el.split('=');
         if (spl.length != 2 || Number.isNaN(parseInt(spl[0])) || !['true', 'false'].includes(spl[1].trim().toLowerCase())) {
@@ -548,7 +548,7 @@ export default defineComponent({
         }
       }
 
-      this.additionalNicsDhcp = event;
+      this.additionalLansDhcp = event;
     },
 
     onChangeAdditionalDisks(event) {
@@ -774,7 +774,7 @@ export default defineComponent({
       this.value.nicIps = this.nicIps;
       this.value.additionalLans = this.additionalLans;
       this.value.additionalLansIds = this.additionalLansIds;
-      this.value.additionalNicsDhcp = this.additionalNicsDhcp;
+      this.value.additionalLansDhcp = this.additionalLansDhcp;
       this.value.additionalDisks = this.additionalDisks;
       this.value.waitForIpChange = this.waitForIpChange;
       this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
@@ -1079,14 +1079,14 @@ export default defineComponent({
         </div>
         <div class="col span-4">
           <StringList
-            label="Additional NICs DHCP"
-            v-model:value="additionalNicsDhcp"
-            :items="additionalNicsDhcp"
+            label="Additional LANs DHCP"
+            v-model:value="additionalLansDhcp"
+            :items="additionalLansDhcp"
             :mode="mode"
             :disabled="busy"
-            @change="onChangeAdditionalNicsDhcp($event)"
+            @change="onChangeAdditionalLansDhcp($event)"
           />
-          <p class="help-block">Optional. Per-additional-NIC DHCP, as LAN_ID=true/false entries (e.g. 5=false). Additional LANs not listed keep DHCP on. Does not affect the primary NIC, which uses "NIC DHCP".</p>
+          <p class="help-block">Optional. Per-additional-LAN DHCP, as LAN_ID=true/false entries (e.g. 5=false). Additional LANs not listed keep DHCP on. Does not affect the primary NIC, which uses "NIC DHCP".</p>
         </div>
         <div class="col span-4">
           <StringList
