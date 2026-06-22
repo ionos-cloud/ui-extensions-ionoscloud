@@ -541,9 +541,9 @@ export default defineComponent({
 
     onChangeAdditionalLansDhcp(event) {
       for (let el of event) {
-        let spl = el.split('=');
+        let spl = el.split(':');
         if (spl.length != 2 || Number.isNaN(parseInt(spl[0])) || !['true', 'false'].includes(spl[1].trim().toLowerCase())) {
-          alert('Invalid entry detected: ' + el + '. The accepted format is LAN_ID=true/false (e.g. 5=false)!');
+          alert('Invalid entry detected: ' + el + '. The accepted format is LAN_ID:true/false (e.g. 5:false)!');
           return;
         }
       }
@@ -1086,7 +1086,7 @@ export default defineComponent({
             :disabled="busy"
             @change="onChangeAdditionalLansDhcp($event)"
           />
-          <p class="help-block">Optional. Per-additional-LAN DHCP, as LAN_ID=true/false entries (e.g. 5=false). Additional LANs not listed keep DHCP on. Does not affect the primary NIC, which uses "NIC DHCP".</p>
+          <p class="help-block">Optional. Per-additional-LAN DHCP, as LAN_ID:true/false entries (e.g. 5:false). Additional LANs not listed keep DHCP on. Does not affect the primary NIC, which uses "NIC DHCP".</p>
         </div>
         <div class="col span-4">
           <StringList
