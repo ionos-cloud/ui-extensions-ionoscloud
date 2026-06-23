@@ -250,7 +250,7 @@ function validateIp(ip) {
 
 function validateSubnet(subnet) {
   let splitSubnet = subnet.split('/')
-  return (splitSubnet.length == 2 && validateIp(splitSubnet[0]) && !(Number.isNaN(parseInt(splitSubnet[1]))));
+  return (splitSubnet.length == 2 && validateIp(splitSubnet[0]) && /^\d+$/.test(splitSubnet[1].trim()));
 }
 
 
@@ -456,6 +456,7 @@ export default defineComponent({
       nicIps:                      this.value?.nicIps || [],
       additionalLans:              this.value?.additionalLans || [],
       additionalLansIds:           this.value?.additionalLansIds || [],
+      additionalLansDhcp:          this.value?.additionalLansDhcp || [],
       additionalDisks:             this.value?.additionalDisks || [],
       waitForIpChange:             this.value?.waitForIpChange || false,
       waitForIpChangeTimeout:      this.value?.waitForIpChangeTimeout || '600',
@@ -529,13 +530,25 @@ export default defineComponent({
 
     onChangeAdditionalLansIds(event) {
       for (let id of event) {
-        if (Number.isNaN(parseInt(id))) {
+        if (!/^\d+$/.test(id.trim())) {
           alert('Invalid LAN ID detected: ' + id );
           return;
         }
       }
 
       this.additionalLansIds = event;
+    },
+
+    onChangeAdditionalLansDhcp(event) {
+      for (let el of event) {
+        let spl = el.split(':');
+        if (spl.length !== 2 || !/^\d+$/.test(spl[0].trim()) || !['true', 'false'].includes(spl[1].trim().toLowerCase())) {
+          alert('Invalid entry detected: ' + el + '. The accepted format is LAN_ID:true/false (e.g. 5:false)!');
+          return;
+        }
+      }
+
+      this.additionalLansDhcp = event;
     },
 
     onChangeAdditionalDisks(event) {
@@ -554,7 +567,7 @@ export default defineComponent({
         ADDITIONAL_DISK_TYPE_OPTIONS.map((val) => {return val.value.value})
 
         let diskSize = spl[1]
-        if (Number.isNaN(parseInt(diskSize))) {
+        if (!/^\d+$/.test(diskSize.trim())) {
           alert('Invalid disk size detected: ' + diskSize );
           return;
         }
@@ -583,7 +596,7 @@ export default defineComponent({
           return;
         }
         let lanId = spl[0]
-        if (Number.isNaN(parseInt(lanId))) {
+        if (!/^\d+$/.test(lanId.trim())) {
           alert('Invalid LAN ID detected: ' + lanId );
           return;
         }
@@ -761,6 +774,7 @@ export default defineComponent({
       this.value.nicIps = this.nicIps;
       this.value.additionalLans = this.additionalLans;
       this.value.additionalLansIds = this.additionalLansIds;
+      this.value.additionalLansDhcp = this.additionalLansDhcp;
       this.value.additionalDisks = this.additionalDisks;
       this.value.waitForIpChange = this.waitForIpChange;
       this.value.waitForIpChangeTimeout = this.waitForIpChangeTimeout;
@@ -1065,6 +1079,17 @@ export default defineComponent({
         </div>
         <div class="col span-4">
           <StringList
+            label="Additional LANs DHCP"
+            v-model:value="additionalLansDhcp"
+            :items="additionalLansDhcp"
+            :mode="mode"
+            :disabled="busy"
+            @change="onChangeAdditionalLansDhcp($event)"
+          />
+          <p class="help-block">Optional. Per-additional-LAN DHCP, as LAN_ID:true/false entries (e.g. 5:false). Additional LANs not listed keep DHCP on. Does not affect the primary NIC, which uses "NIC DHCP".</p>
+        </div>
+        <div class="col span-4">
+          <StringList
             label="NIC Ips"
             v-model:value="nicIps"
             :items="nicIps"
@@ -1074,6 +1099,9 @@ export default defineComponent({
           />
           <p class="help-block">Optional. IPBlock reserved IPs. If not set, the driver will reserve an IPBlock automatically or let the API set a private IP if the LAN is private</p>
         </div>
+      </div>
+
+      <div class="row mt-10">
         <div class="col span-4">
           <Checkbox
             label="NIC Multi Queue"
@@ -1083,9 +1111,6 @@ export default defineComponent({
           />
           <p class="help-block">Activate or deactivate the Multi Queue feature on all NICs of this server.</p>
         </div>
-      </div>
-
-      <div class="row mt-10">
         <div class="col span-4">
           <Checkbox
             label="Wait for NIC IP change"
