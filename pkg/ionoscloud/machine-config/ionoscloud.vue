@@ -250,7 +250,7 @@ function validateIp(ip) {
 
 function validateSubnet(subnet) {
   let splitSubnet = subnet.split('/')
-  return (splitSubnet.length == 2 && validateIp(splitSubnet[0]) && !(Number.isNaN(parseInt(splitSubnet[1]))));
+  return (splitSubnet.length == 2 && validateIp(splitSubnet[0]) && /^\d+$/.test(splitSubnet[1].trim()));
 }
 
 
@@ -530,7 +530,7 @@ export default defineComponent({
 
     onChangeAdditionalLansIds(event) {
       for (let id of event) {
-        if (Number.isNaN(parseInt(id))) {
+        if (!/^\d+$/.test(id.trim())) {
           alert('Invalid LAN ID detected: ' + id );
           return;
         }
@@ -542,7 +542,7 @@ export default defineComponent({
     onChangeAdditionalLansDhcp(event) {
       for (let el of event) {
         let spl = el.split(':');
-        if (spl.length != 2 || Number.isNaN(parseInt(spl[0])) || !['true', 'false'].includes(spl[1].trim().toLowerCase())) {
+        if (spl.length !== 2 || !/^\d+$/.test(spl[0].trim()) || !['true', 'false'].includes(spl[1].trim().toLowerCase())) {
           alert('Invalid entry detected: ' + el + '. The accepted format is LAN_ID:true/false (e.g. 5:false)!');
           return;
         }
@@ -567,7 +567,7 @@ export default defineComponent({
         ADDITIONAL_DISK_TYPE_OPTIONS.map((val) => {return val.value.value})
 
         let diskSize = spl[1]
-        if (Number.isNaN(parseInt(diskSize))) {
+        if (!/^\d+$/.test(diskSize.trim())) {
           alert('Invalid disk size detected: ' + diskSize );
           return;
         }
@@ -596,7 +596,7 @@ export default defineComponent({
           return;
         }
         let lanId = spl[0]
-        if (Number.isNaN(parseInt(lanId))) {
+        if (!/^\d+$/.test(lanId.trim())) {
           alert('Invalid LAN ID detected: ' + lanId );
           return;
         }
