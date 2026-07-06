@@ -169,6 +169,18 @@ const ADDITIONAL_DISK_TYPE_OPTIONS = [
     label: 'SSD Premium',
     value: {'value': 'SSD Premium', 'name': 'SSD Premium'}
   },
+  {
+    label: 'ESSENTIAL',
+    value: {'value': 'ESSENTIAL', 'name': 'ESSENTIAL'}
+  },
+  {
+    label: 'BALANCED',
+    value: {'value': 'BALANCED', 'name': 'BALANCED'}
+  },
+  {
+    label: 'PERFORMANCE',
+    value: {'value': 'PERFORMANCE', 'name': 'PERFORMANCE'}
+  },
 ]
 
 const DISK_TYPE_SELECT_OPTIONS = ADDITIONAL_DISK_TYPE_OPTIONS.concat([
